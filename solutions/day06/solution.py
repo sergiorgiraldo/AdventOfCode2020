@@ -15,10 +15,10 @@ class Group:
             for answer in person:
                 self.answers[ord(answer) - 97] += 1
 
-    def get_total_yes_answers(self):
+    def get_any_yes_answers(self):
         return sum([answer > 0 for answer in self.answers])
 
-    def get_everyone_yes(self):
+    def get_all_yes_answers(self):
         return sum([answer == self.num_of_people for answer in self.answers])
 
 class Solution(InputAsStringSolution):
@@ -28,12 +28,12 @@ class Solution(InputAsStringSolution):
     def get_questions_with_any_yes(self, lines):
         groups = [Group(group) for group in lines.split("\n\n")]
 
-        return sum([group.get_total_yes_answers() for group in groups])
+        return sum([group.get_any_yes_answers() for group in groups])
 
     def get_questions_with_all_yes(self, lines):
         groups = [Group(group) for group in lines.split("\n\n")]
 
-        return sum([group.get_everyone_yes() for group in groups])
+        return sum([group.get_all_yes_answers() for group in groups])
     
     def part_1(self):
         start_time = time.time()
