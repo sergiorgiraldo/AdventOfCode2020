@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/sergiorgiraldo/AdventOfCode2020/compare/v2.0.0...v3.0.0) (2024-04-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* day 7 till 13 completed
+
+### Features
+
+* day 7 till 13 completed ([8eeafb7](https://github.com/sergiorgiraldo/AdventOfCode2020/commit/8eeafb74fe56908593b865c2a2f03f1d8dab02cb))
+
 ## [2.0.0](https://github.com/sergiorgiraldo/AdventOfCode2020/compare/v1.0.0...v2.0.0) (2024-04-08)
 
 
