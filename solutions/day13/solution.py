@@ -56,6 +56,10 @@ class Solution(InputAsLinesSolution):
     # share a common factor other than 1).
     # https://en.wikipedia.org/wiki/Chinese_remainder_theorem
 
+    # for the algorithm below to find the solution, refer to these
+    # https://www.math.cmu.edu/~mradclif/teaching/127S19/Notes/ChineseRemainderTheorem.pdf
+    # https://www.youtube.com/watch?v=ru7mWZJlRQg
+
     def coprime(self,n):
         coprimes = 0        
         for i in range(1, n+1):
