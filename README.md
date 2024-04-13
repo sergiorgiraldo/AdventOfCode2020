@@ -8,7 +8,7 @@ My solutions to [Advent of Code 2020](https://adventofcode.com/2020) done in Pyt
 
 ![](https://img.shields.io/badge/day%20📅-24-blue)
  
-![](https://img.shields.io/badge/stars%20⭐-26-yellow)
+![](https://img.shields.io/badge/stars%20⭐-30-yellow)
 
 ---
 
