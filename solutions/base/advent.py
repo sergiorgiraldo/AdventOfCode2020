@@ -15,7 +15,7 @@ class BaseSolution(ABC):
     _year: int
     _day: int
 
-    def __init__(cls, lines=False, csv=False, two_dimensional=False, int_csvline=False):
+    def __init__(cls, lines=False, csv=False, two_dimensional=False, int_csvline=False, block=False):
         if lines:
             cls.input = cls.read_input().splitlines()
         else:
@@ -31,10 +31,15 @@ class BaseSolution(ABC):
                 else:  
                     if int_csvline: #single line
                         line = cls.read_input().strip()
+                        
                         cls.input = [int(d) for d in line.split(",")]
+                    else:
+                        if block: #blocks separated by newline
+                            lines = cls.read_input()
 
-                    else:  # if string:
-                        cls.input = cls.read_input()
+                            cls.input = lines.split("\n\n")
+                        else:  # if string:
+                            cls.input = cls.read_input()
 
     @property
     def year(self):
@@ -103,35 +108,42 @@ class BaseSolution(ABC):
 # Concrete Solutions
 class InputAsStringSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=False)
+        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=False, block=False)
 
     def dummy(self):
         pass
 
 class InputAsLinesSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=True, csv=False, two_dimensional=False, int_csvline=False)
+        super().__init__(lines=True, csv=False, two_dimensional=False, int_csvline=False, block=False)
 
     def dummy(self):
         pass
     
 class InputAsCSVSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=True, two_dimensional=False, int_csvline=False)
+        super().__init__(lines=False, csv=True, two_dimensional=False, int_csvline=False, block=False)
 
     def dummy(self):
         pass
 
 class InputAsIntCSVLineSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=True)
+        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=True, block=False)
 
     def dummy(self):
         pass
 
 class InputAs2DSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=True, int_csvline=False)
+        super().__init__(lines=False, csv=False, two_dimensional=True, int_csvline=False, block=False)
+
+    def dummy(self):
+        pass
+
+class InputAsBlockSolution(BaseSolution):
+    def __init__(self):
+        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=False, block=True)
 
     def dummy(self):
         pass

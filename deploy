@@ -6,7 +6,7 @@ git bumpmajor
 
 git add --all . 
 
-git commit -S -m 'feat!: day '"$1"' completed'
+git commit -S -m 'feat!: day '"$1"' completed. Finally over all years!'
 
 git push -u origin HEAD
 
