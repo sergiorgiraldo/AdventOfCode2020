@@ -14,24 +14,34 @@ class Solution(InputAsLinesSolution):
     def get_encryption_key(self, keys):
         card_key, door_key = *map(int, keys),
 
-        public_key      = [1, 1]
-        encryption_key  = [1, 1]
-        
+        public_key = [1, 1]
+        encryption_key = 1
+        cycles = 0
+
         #algorithm is symmetric so I can perform the operations in both keys
         #at the same time, whichever matches first is my answer.
-        #with this approach, I can cycle just once
+        #with this approach, I can cycle just once.
         while True:
+            cycles += 1
+            
             public_key[0] = (public_key[0] * 7) % 20201227 #magic numbers from puzzle
             public_key[1] = (public_key[1] * 7) % 20201227
 
-            encryption_key[0] = (encryption_key[0] * door_key) % 20201227
-            encryption_key[1] = (encryption_key[1] * card_key) % 20201227
-            
             if public_key[0] == card_key:
-                return encryption_key[0]
+                for _ in range(cycles):
+                    encryption_key = (encryption_key * door_key) % 20201227
+
+                return encryption_key
+            
             elif public_key[1] == door_key: 
-                return encryption_key[1]
-    
+                for _ in range(cycles):
+                    encryption_key = (encryption_key * card_key) % 20201227
+                
+                return encryption_key
+
+            #not big primes, took 4_412_860 cycles to crack, less than a sec :)
+
+
     def part_1(self):
         start_time = time.time()
 
