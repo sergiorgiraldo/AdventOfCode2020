@@ -1,4 +1,9 @@
 <style>pre{font-size: large;}</style>
+<script src="script.js"></script>
+<div id="navigation">
+<button onclick="navigateTo('prev')">Previous Day</button>
+<button onclick="navigateTo('next')">Next Day</button>
+</div>
 <h1>Day 13</h1>
 <pre>
 # puzzle prompt: https://adventofcode.com/2020/day/13
@@ -58,6 +63,10 @@ class Solution(InputAsLinesSolution):
     # the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors 
     # share a common factor other than 1).
     # https://en.wikipedia.org/wiki/Chinese_remainder_theorem
+
+    # for the algorithm below to find the solution, refer to these
+    # https://www.math.cmu.edu/~mradclif/teaching/127S19/Notes/ChineseRemainderTheorem.pdf
+    # https://www.youtube.com/watch?v=ru7mWZJlRQg
 
     def coprime(self,n):
         coprimes = 0        
