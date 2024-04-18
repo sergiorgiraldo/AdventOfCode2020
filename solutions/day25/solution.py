@@ -14,23 +14,23 @@ class Solution(InputAsLinesSolution):
     def get_encryption_key(self, keys):
         card_key, door_key = *map(int, keys),
 
-        cycles = 1
-        subject_number = 1
-
+        public_key      = [1, 1]
+        encryption_key  = [1, 1]
+        
+        #algorithm is symmetric so I can perform the operations in both keys
+        #at the same time, whichever matches first is my answer.
+        #with this approach, I can cycle just once
         while True:
-            subject_number *= 7         #magic number from puzzle
-            subject_number %= 20201227  #magic number from puzzle
-            if subject_number == door_key:
-                break
-            else:
-                cycles += 1
+            public_key[0] = (public_key[0] * 7) % 20201227 #magic numbers from puzzle
+            public_key[1] = (public_key[1] * 7) % 20201227
 
-        sum = 1
-        for _ in range(cycles):
-            sum *= card_key
-            sum %= 20201227
-
-        return sum
+            encryption_key[0] = (encryption_key[0] * door_key) % 20201227
+            encryption_key[1] = (encryption_key[1] * card_key) % 20201227
+            
+            if public_key[0] == card_key:
+                return encryption_key[0]
+            elif public_key[1] == door_key: 
+                return encryption_key[1]
     
     def part_1(self):
         start_time = time.time()
