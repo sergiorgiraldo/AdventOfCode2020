@@ -1,4 +1,32 @@
-<style>pre{font-size: large;}</style>
+<style>
+        pre {
+    background: #303030;
+    color: #f1f1f1;
+    padding: 10px 16px;
+    border-radius: 2px;
+    border-top: 4px solid #00aeef;
+    -moz-box-shadow: inset 0 0 10px #000;
+    box-shadow: inset 0 0 10px #000;
+    counter-reset: line;
+    }
+    pre span {
+    display: block;
+    line-height: 1.5rem;
+    }
+    pre span:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    padding: 0 .5em;
+    margin-right: .5em;
+    color: #888
+    }
+    span{
+        font-family: monospace;
+        font-size: 16px;
+    }
+    </style>
 <script src="script.js"></script>
 <div id="navigation">
 <button onclick="navigateTo('prev')">Previous Day</button>
@@ -6,132 +34,132 @@
 </div>
 <h1>Day 14</h1>
 <pre>
-# puzzle prompt: https://adventofcode.com/2020/day/14
-
-import time
-import sys
-sys.path.insert(0,"..")
-
-from base.advent import *
-from abc import ABC, abstractmethod
-from typing import final
-
-SIZE = 36
-
-class DockingProgram(ABC):
-    def __init__(self, instructions):
-        self.mask_string = None
-        self.memory = {}
-        self.instructions = instructions
-
-    @abstractmethod
-    def mask_bit(self, mask, bit):
-        pass
-
-    @abstractmethod
-    def write(self, mem_addr, value):
-        pass
-
-    @final
-    def mask(self, value):
-        if self.mask_string is None:
-            return value
-        
-        masked_value = ""
-        value = bin(value)[2:]
-
-        if len(value) < SIZE:
-            value = "0" * (SIZE - len(value)) + value
-
-        for mask, bit in zip(self.mask_string, value):
-            masked_value += self.mask_bit(mask, bit)
-
-        return masked_value
-
-    @final
-    def run(self):
-        for instruction in self.instructions:
-            if instruction.startswith("mask"):
-                # Ignore the `mask = ` part in the instruction
-                self.mask_string = instruction[7:]
-            else:
-                parts = instruction.split(" = ")
-                start_index = parts[0].find("[") + 1
-                mem_addr = int(parts[0][start_index:-1])
-                value = int(parts[1])
-                self.write(mem_addr, value)
-
-    @property
-    @final
-    def memory_status(self):
-        return sum(self.memory.values())
-
-class DockingProgram_V1(DockingProgram):
-    def mask_bit(self, mask, bit):
-        return bit if mask == "X" else mask
-
-    def write(self, mem_addr, value):
-        masked_value = self.mask(value)
-        self.memory[mem_addr] = int(masked_value, 2)
-
-class DockingProgram_V2(DockingProgram):
-    def mask_bit(self, mask, bit):
-        return bit if mask == "0" else mask
-
-    def write(self, mem_addr, value):
-        def helper(masked_addr):
-            if "X" not in masked_addr:
-                addr = int(masked_addr, 2)
-                self.memory[addr] = value
-            else:
-                index = masked_addr.find("X")
-                helper(masked_addr[:index] + "1" + masked_addr[index+1:])
-                helper(masked_addr[:index] + "0" + masked_addr[index+1:])
-
-        masked_addr = self.mask(mem_addr)
-
-        helper(masked_addr)
-
-class Solution(InputAsLinesSolution):
-    _year = 2020
-    _day = 14
-
-    def get_memory_v1(self, instructions):
-        program = DockingProgram_V1(instructions)
-        
-        program.run()
-
-        return program.memory_status
-
-    def get_memory_v2(self, instructions):
-        program = DockingProgram_V2(instructions)
-        
-        program.run()
-
-        return program.memory_status
-
-    def part_1(self):
-        start_time = time.time()
-
-        res = self.get_memory_v1(self.input)
-
-        end_time = time.time()
-
-        self.solve("1", res, (end_time - start_time))
-
-    def part_2(self):
-        start_time = time.time()
-
-        res = self.get_memory_v2(self.input)
-
-        end_time = time.time()
-
-        self.solve("2", res, (end_time - start_time))
-
-if __name__ == "__main__":
-    solution = Solution()
-
-    solution.part_1()
-    
-    solution.part_2()
+<span># puzzle prompt: https://adventofcode.com/2020/day/14</span>
+<span></span>
+<span>import time</span>
+<span>import sys</span>
+<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>from base.advent import *</span>
+<span>from abc import ABC, abstractmethod</span>
+<span>from typing import final</span>
+<span></span>
+<span>SIZE = 36</span>
+<span></span>
+<span>class DockingProgram(ABC):</span>
+<span>    def __init__(self, instructions):</span>
+<span>        self.mask_string = None</span>
+<span>        self.memory = {}</span>
+<span>        self.instructions = instructions</span>
+<span></span>
+<span>    @abstractmethod</span>
+<span>    def mask_bit(self, mask, bit):</span>
+<span>        pass</span>
+<span></span>
+<span>    @abstractmethod</span>
+<span>    def write(self, mem_addr, value):</span>
+<span>        pass</span>
+<span></span>
+<span>    @final</span>
+<span>    def mask(self, value):</span>
+<span>        if self.mask_string is None:</span>
+<span>            return value</span>
+<span>        </span>
+<span>        masked_value = ""</span>
+<span>        value = bin(value)[2:]</span>
+<span></span>
+<span>        if len(value) < SIZE:</span>
+<span>            value = "0" * (SIZE - len(value)) + value</span>
+<span></span>
+<span>        for mask, bit in zip(self.mask_string, value):</span>
+<span>            masked_value += self.mask_bit(mask, bit)</span>
+<span></span>
+<span>        return masked_value</span>
+<span></span>
+<span>    @final</span>
+<span>    def run(self):</span>
+<span>        for instruction in self.instructions:</span>
+<span>            if instruction.startswith("mask"):</span>
+<span>                # Ignore the `mask = ` part in the instruction</span>
+<span>                self.mask_string = instruction[7:]</span>
+<span>            else:</span>
+<span>                parts = instruction.split(" = ")</span>
+<span>                start_index = parts[0].find("[") + 1</span>
+<span>                mem_addr = int(parts[0][start_index:-1])</span>
+<span>                value = int(parts[1])</span>
+<span>                self.write(mem_addr, value)</span>
+<span></span>
+<span>    @property</span>
+<span>    @final</span>
+<span>    def memory_status(self):</span>
+<span>        return sum(self.memory.values())</span>
+<span></span>
+<span>class DockingProgram_V1(DockingProgram):</span>
+<span>    def mask_bit(self, mask, bit):</span>
+<span>        return bit if mask == "X" else mask</span>
+<span></span>
+<span>    def write(self, mem_addr, value):</span>
+<span>        masked_value = self.mask(value)</span>
+<span>        self.memory[mem_addr] = int(masked_value, 2)</span>
+<span></span>
+<span>class DockingProgram_V2(DockingProgram):</span>
+<span>    def mask_bit(self, mask, bit):</span>
+<span>        return bit if mask == "0" else mask</span>
+<span></span>
+<span>    def write(self, mem_addr, value):</span>
+<span>        def helper(masked_addr):</span>
+<span>            if "X" not in masked_addr:</span>
+<span>                addr = int(masked_addr, 2)</span>
+<span>                self.memory[addr] = value</span>
+<span>            else:</span>
+<span>                index = masked_addr.find("X")</span>
+<span>                helper(masked_addr[:index] + "1" + masked_addr[index+1:])</span>
+<span>                helper(masked_addr[:index] + "0" + masked_addr[index+1:])</span>
+<span></span>
+<span>        masked_addr = self.mask(mem_addr)</span>
+<span></span>
+<span>        helper(masked_addr)</span>
+<span></span>
+<span>class Solution(InputAsLinesSolution):</span>
+<span>    _year = 2020</span>
+<span>    _day = 14</span>
+<span></span>
+<span>    def get_memory_v1(self, instructions):</span>
+<span>        program = DockingProgram_V1(instructions)</span>
+<span>        </span>
+<span>        program.run()</span>
+<span></span>
+<span>        return program.memory_status</span>
+<span></span>
+<span>    def get_memory_v2(self, instructions):</span>
+<span>        program = DockingProgram_V2(instructions)</span>
+<span>        </span>
+<span>        program.run()</span>
+<span></span>
+<span>        return program.memory_status</span>
+<span></span>
+<span>    def part_1(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_memory_v1(self.input)</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("1", res, (end_time - start_time))</span>
+<span></span>
+<span>    def part_2(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_memory_v2(self.input)</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("2", res, (end_time - start_time))</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
+<span>    solution = Solution()</span>
+<span></span>
+<span>    solution.part_1()</span>
+<span>    </span>
+<span>    solution.part_2()</span>
 </pre>

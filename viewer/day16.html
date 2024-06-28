@@ -1,4 +1,32 @@
-<style>pre{font-size: large;}</style>
+<style>
+        pre {
+    background: #303030;
+    color: #f1f1f1;
+    padding: 10px 16px;
+    border-radius: 2px;
+    border-top: 4px solid #00aeef;
+    -moz-box-shadow: inset 0 0 10px #000;
+    box-shadow: inset 0 0 10px #000;
+    counter-reset: line;
+    }
+    pre span {
+    display: block;
+    line-height: 1.5rem;
+    }
+    pre span:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    padding: 0 .5em;
+    margin-right: .5em;
+    color: #888
+    }
+    span{
+        font-family: monospace;
+        font-size: 16px;
+    }
+    </style>
 <script src="script.js"></script>
 <div id="navigation">
 <button onclick="navigateTo('prev')">Previous Day</button>
@@ -6,155 +34,155 @@
 </div>
 <h1>Day 16</h1>
 <pre>
-# puzzle prompt: https://adventofcode.com/2020/day/16
-
-import time
-import sys
-sys.path.insert(0,"..")
-
-from base.advent import *
-from collections import defaultdict
-
-class FieldRule:
-    def __init__(self, rule: str):
-        rule = rule.split(" or ")
-        self.first_range = self._read_range(rule[0])
-        self.second_range = self._read_range(rule[1])
-
-    def _read_range(self, range):
-        range = range.split("-")
-        return int(range[0]), int(range[1])
-
-    def validate(self, value):
-        return self.first_range[0] <= value <= self.first_range[1] or\
-            self.second_range[0] <= value <= self.second_range[1]
-
-class TicketRule:
-    def __init__(self, rules: str):
-        self.rules = {}
-        self.rule_index = {}
-        self.valid_tickets = []
-        for rule in rules.splitlines():
-            self.set_rule(rule)
-
-    def set_rule(self, rule):
-        parts = rule.split(": ")
-        field = parts[0]
-        self.rules[field] = FieldRule(parts[1])
-
-    def _validate_value(self, value):
-        return any(map(lambda rule: rule.validate(value), self.rules.values()))
-
-    def count_invalid(self, ticket):
-        invalid = 0
-        valid = True
-        for value in ticket:
-            if not self._validate_value(value):
-                valid = False
-                invalid += value
-        if valid:
-            self.valid_tickets.append(ticket)
-        return invalid
-
-    def validate_rule(self, field, ticket_idx):
-        rule: FieldRule = self.rules[field]
-        for ticket in self.valid_tickets:
-            if not rule.validate(ticket[ticket_idx]):
-                return False
-        return True
-
-    def detect_index(self):
-        # Find the possible indices for each field
-        possile_idx = defaultdict(list)
-        for field in self.rules:
-            for i in range(len(self.rules)):
-                if self.validate_rule(field, i):
-                    possile_idx[field].append(i)
-
-        # Sort by len of possible choices to help find faster.
-        possible_idx_len = [(len(possile_idx[field]), field)
-                            for field in self.rules]
-        possible_idx_len.sort()
-
-        used_indices = [False] * len(self.rules)
-
-        def helper(field_idx):
-            if field_idx == len(self.rules):
-                return True
-
-            field = possible_idx_len[field_idx][1]
-            for idx in possile_idx[field]:
-                if not used_indices[idx]:
-                    used_indices[idx] = True
-                    if helper(field_idx + 1):
-                        self.rule_index[field] = idx
-                        return True
-                    used_indices[idx] = False
-
-        helper(0)
-
-class Solution(InputAsStringSolution):
-    _year = 2020
-    _day = 16
-
-    def parse(self, lines):
-        parts = lines.split("\n\n")
-        rule = TicketRule(parts[0])
-
-        my_ticket = parts[1].splitlines()[1]
-        my_ticket = [int(value) for value in my_ticket.split(",")]
-
-        nearby_tickets = parts[2].splitlines()[1:]
-        nearby_tickets = [[int(value) for value in ticket.split(",")] for ticket in nearby_tickets]
-
-        return rule, my_ticket, nearby_tickets
-
-    def get_error_rate(self, lines):
-        rule, _, nearby_tickets = self.parse(lines)
-
-        error_rate = sum([rule.count_invalid(ticket) for ticket in nearby_tickets])
-
-        return rule, error_rate
-
-    def determine_my_ticket(self, lines):
-        _, my_ticket, _ = self.parse(lines)
-
-        rule = self.get_error_rate(lines)[0] #get rid of invalid tickets
-
-        rule.detect_index()
-        indices = []
-        for field in rule.rules:
-            if 'departure' in field:
-                indices.append(rule.rule_index[field])
-
-        result = 1
-        for idx in indices:
-            result *= my_ticket[idx]
-        
-        return rule, result
-
-    def part_1(self):
-        start_time = time.time()
-
-        res = self.get_error_rate(self.input)[1]
-
-        end_time = time.time()
-
-        self.solve("1", res, (end_time - start_time))
-
-    def part_2(self):
-        start_time = time.time()
-
-        res = self.determine_my_ticket(self.input)[1]
-
-        end_time = time.time()
-
-        self.solve("2", res, (end_time - start_time))
-
-if __name__ == "__main__":
-    solution = Solution()
-
-    solution.part_1()
-    
-    solution.part_2()
+<span># puzzle prompt: https://adventofcode.com/2020/day/16</span>
+<span></span>
+<span>import time</span>
+<span>import sys</span>
+<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>from base.advent import *</span>
+<span>from collections import defaultdict</span>
+<span></span>
+<span>class FieldRule:</span>
+<span>    def __init__(self, rule: str):</span>
+<span>        rule = rule.split(" or ")</span>
+<span>        self.first_range = self._read_range(rule[0])</span>
+<span>        self.second_range = self._read_range(rule[1])</span>
+<span></span>
+<span>    def _read_range(self, range):</span>
+<span>        range = range.split("-")</span>
+<span>        return int(range[0]), int(range[1])</span>
+<span></span>
+<span>    def validate(self, value):</span>
+<span>        return self.first_range[0] <= value <= self.first_range[1] or\</span>
+<span>            self.second_range[0] <= value <= self.second_range[1]</span>
+<span></span>
+<span>class TicketRule:</span>
+<span>    def __init__(self, rules: str):</span>
+<span>        self.rules = {}</span>
+<span>        self.rule_index = {}</span>
+<span>        self.valid_tickets = []</span>
+<span>        for rule in rules.splitlines():</span>
+<span>            self.set_rule(rule)</span>
+<span></span>
+<span>    def set_rule(self, rule):</span>
+<span>        parts = rule.split(": ")</span>
+<span>        field = parts[0]</span>
+<span>        self.rules[field] = FieldRule(parts[1])</span>
+<span></span>
+<span>    def _validate_value(self, value):</span>
+<span>        return any(map(lambda rule: rule.validate(value), self.rules.values()))</span>
+<span></span>
+<span>    def count_invalid(self, ticket):</span>
+<span>        invalid = 0</span>
+<span>        valid = True</span>
+<span>        for value in ticket:</span>
+<span>            if not self._validate_value(value):</span>
+<span>                valid = False</span>
+<span>                invalid += value</span>
+<span>        if valid:</span>
+<span>            self.valid_tickets.append(ticket)</span>
+<span>        return invalid</span>
+<span></span>
+<span>    def validate_rule(self, field, ticket_idx):</span>
+<span>        rule: FieldRule = self.rules[field]</span>
+<span>        for ticket in self.valid_tickets:</span>
+<span>            if not rule.validate(ticket[ticket_idx]):</span>
+<span>                return False</span>
+<span>        return True</span>
+<span></span>
+<span>    def detect_index(self):</span>
+<span>        # Find the possible indices for each field</span>
+<span>        possile_idx = defaultdict(list)</span>
+<span>        for field in self.rules:</span>
+<span>            for i in range(len(self.rules)):</span>
+<span>                if self.validate_rule(field, i):</span>
+<span>                    possile_idx[field].append(i)</span>
+<span></span>
+<span>        # Sort by len of possible choices to help find faster.</span>
+<span>        possible_idx_len = [(len(possile_idx[field]), field)</span>
+<span>                            for field in self.rules]</span>
+<span>        possible_idx_len.sort()</span>
+<span></span>
+<span>        used_indices = [False] * len(self.rules)</span>
+<span></span>
+<span>        def helper(field_idx):</span>
+<span>            if field_idx == len(self.rules):</span>
+<span>                return True</span>
+<span></span>
+<span>            field = possible_idx_len[field_idx][1]</span>
+<span>            for idx in possile_idx[field]:</span>
+<span>                if not used_indices[idx]:</span>
+<span>                    used_indices[idx] = True</span>
+<span>                    if helper(field_idx + 1):</span>
+<span>                        self.rule_index[field] = idx</span>
+<span>                        return True</span>
+<span>                    used_indices[idx] = False</span>
+<span></span>
+<span>        helper(0)</span>
+<span></span>
+<span>class Solution(InputAsStringSolution):</span>
+<span>    _year = 2020</span>
+<span>    _day = 16</span>
+<span></span>
+<span>    def parse(self, lines):</span>
+<span>        parts = lines.split("\n\n")</span>
+<span>        rule = TicketRule(parts[0])</span>
+<span></span>
+<span>        my_ticket = parts[1].splitlines()[1]</span>
+<span>        my_ticket = [int(value) for value in my_ticket.split(",")]</span>
+<span></span>
+<span>        nearby_tickets = parts[2].splitlines()[1:]</span>
+<span>        nearby_tickets = [[int(value) for value in ticket.split(",")] for ticket in nearby_tickets]</span>
+<span></span>
+<span>        return rule, my_ticket, nearby_tickets</span>
+<span></span>
+<span>    def get_error_rate(self, lines):</span>
+<span>        rule, _, nearby_tickets = self.parse(lines)</span>
+<span></span>
+<span>        error_rate = sum([rule.count_invalid(ticket) for ticket in nearby_tickets])</span>
+<span></span>
+<span>        return rule, error_rate</span>
+<span></span>
+<span>    def determine_my_ticket(self, lines):</span>
+<span>        _, my_ticket, _ = self.parse(lines)</span>
+<span></span>
+<span>        rule = self.get_error_rate(lines)[0] #get rid of invalid tickets</span>
+<span></span>
+<span>        rule.detect_index()</span>
+<span>        indices = []</span>
+<span>        for field in rule.rules:</span>
+<span>            if 'departure' in field:</span>
+<span>                indices.append(rule.rule_index[field])</span>
+<span></span>
+<span>        result = 1</span>
+<span>        for idx in indices:</span>
+<span>            result *= my_ticket[idx]</span>
+<span>        </span>
+<span>        return rule, result</span>
+<span></span>
+<span>    def part_1(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_error_rate(self.input)[1]</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("1", res, (end_time - start_time))</span>
+<span></span>
+<span>    def part_2(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.determine_my_ticket(self.input)[1]</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("2", res, (end_time - start_time))</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
+<span>    solution = Solution()</span>
+<span></span>
+<span>    solution.part_1()</span>
+<span>    </span>
+<span>    solution.part_2()</span>
 </pre>

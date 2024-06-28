@@ -1,4 +1,32 @@
-<style>pre{font-size: large;}</style>
+<style>
+        pre {
+    background: #303030;
+    color: #f1f1f1;
+    padding: 10px 16px;
+    border-radius: 2px;
+    border-top: 4px solid #00aeef;
+    -moz-box-shadow: inset 0 0 10px #000;
+    box-shadow: inset 0 0 10px #000;
+    counter-reset: line;
+    }
+    pre span {
+    display: block;
+    line-height: 1.5rem;
+    }
+    pre span:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    padding: 0 .5em;
+    margin-right: .5em;
+    color: #888
+    }
+    span{
+        font-family: monospace;
+        font-size: 16px;
+    }
+    </style>
 <script src="script.js"></script>
 <div id="navigation">
 <button onclick="navigateTo('prev')">Previous Day</button>
@@ -6,115 +34,115 @@
 </div>
 <h1>Day 11</h1>
 <pre>
-# puzzle prompt: https://adventofcode.com/2020/day/11
-
-import time
-import sys
-sys.path.insert(0,"..")
-
-from base.advent import *
-
-class SeatMap:
-    # o o o
-    # o | o
-    # o o o
-    directions = [(-1, -1), (-1, 0), (-1, 1),
-                  (0, -1), (0, 1), 
-                  (1, -1), (1, 0), (1, 1)]
-    
-    def __init__(self, layout):
-        self.layout_original = [[ch for ch in row] for row in layout]
-
-    def check_valid_position(self, row, col):
-        return row >= 0 and row < len(self.layout) and \
-               col >= 0 and col < len(self.layout[0])
-
-    def check_occupied(self, row: int, col: int, direction, first_visible):
-        row += direction[0]
-        col += direction[1]
-
-        if self.check_valid_position(row, col):
-            if self.layout[row][col] == "#":
-                return True
-            if self.layout[row][col] == "." and first_visible:
-                return self.check_occupied(row, col, direction, first_visible)
-            
-        return False
-
-    def count_occupied_around(self, row, col, first_visible):
-        cnt = 0
-
-        for direction in self.directions:
-            if self.check_occupied(row, col, direction, first_visible):
-                cnt += 1
-
-        return cnt
-
-    def count_occupied_seats(self, first_visible = False, rule = 4):
-        self.layout = [[ch for ch in row] for row in self.layout_original]
-        new_layout  = [[ch for ch in row] for row in self.layout]
-
-        is_changing = True
-
-        while is_changing:
-            is_changing = False
-
-            for i in range(len(self.layout)):
-                for j in range(len(self.layout[0])):
-                    if self.layout[i][j] == ".":
-                        continue
-
-                    occupied_around = self.count_occupied_around(i, j, first_visible)
-
-                    if self.layout[i][j] == "L" and occupied_around == 0:
-                        new_layout[i][j] = "#"
-                        is_changing = True
-                    elif self.layout[i][j] == "#" and occupied_around >= rule:
-                        new_layout[i][j] = "L"
-                        is_changing = True
-                    else:
-                        new_layout[i][j] = self.layout[i][j]
-
-            new_layout, self.layout = self.layout, new_layout
-
-        return sum([sum([i == "#" for i in row]) for row in self.layout])
-
-class Solution(InputAsLinesSolution):
-    _year = 2020
-    _day = 11
-
-    def get_occupied_seats(self, lines):
-        seatMap = SeatMap(lines)
-
-        return seatMap.count_occupied_seats()
-
-    def get_occupied_seats_in_sight(self, lines):
-        seatMap = SeatMap(lines)
-
-        return seatMap.count_occupied_seats(True, 5)
-
-    def part_1(self):
-        start_time = time.time()
-
-        res = self.get_occupied_seats(self.input)
-
-        end_time = time.time()
-
-        self.solve("1", res, (end_time - start_time))
-
-    def part_2(self):
-        start_time = time.time()
-
-        res = self.get_occupied_seats_in_sight(self.input)
-
-        end_time = time.time()
-
-        self.solve("2", res, (end_time - start_time))
-
-if __name__ == "__main__":
-    solution = Solution()
-
-    solution.part_1()
-    
-    solution.part_2()
+<span># puzzle prompt: https://adventofcode.com/2020/day/11</span>
+<span></span>
+<span>import time</span>
+<span>import sys</span>
+<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>from base.advent import *</span>
+<span></span>
+<span>class SeatMap:</span>
+<span>    # o o o</span>
+<span>    # o | o</span>
+<span>    # o o o</span>
+<span>    directions = [(-1, -1), (-1, 0), (-1, 1),</span>
+<span>                  (0, -1), (0, 1), </span>
+<span>                  (1, -1), (1, 0), (1, 1)]</span>
+<span>    </span>
+<span>    def __init__(self, layout):</span>
+<span>        self.layout_original = [[ch for ch in row] for row in layout]</span>
+<span></span>
+<span>    def check_valid_position(self, row, col):</span>
+<span>        return row >= 0 and row < len(self.layout) and \</span>
+<span>               col >= 0 and col < len(self.layout[0])</span>
+<span></span>
+<span>    def check_occupied(self, row: int, col: int, direction, first_visible):</span>
+<span>        row += direction[0]</span>
+<span>        col += direction[1]</span>
+<span></span>
+<span>        if self.check_valid_position(row, col):</span>
+<span>            if self.layout[row][col] == "#":</span>
+<span>                return True</span>
+<span>            if self.layout[row][col] == "." and first_visible:</span>
+<span>                return self.check_occupied(row, col, direction, first_visible)</span>
+<span>            </span>
+<span>        return False</span>
+<span></span>
+<span>    def count_occupied_around(self, row, col, first_visible):</span>
+<span>        cnt = 0</span>
+<span></span>
+<span>        for direction in self.directions:</span>
+<span>            if self.check_occupied(row, col, direction, first_visible):</span>
+<span>                cnt += 1</span>
+<span></span>
+<span>        return cnt</span>
+<span></span>
+<span>    def count_occupied_seats(self, first_visible = False, rule = 4):</span>
+<span>        self.layout = [[ch for ch in row] for row in self.layout_original]</span>
+<span>        new_layout  = [[ch for ch in row] for row in self.layout]</span>
+<span></span>
+<span>        is_changing = True</span>
+<span></span>
+<span>        while is_changing:</span>
+<span>            is_changing = False</span>
+<span></span>
+<span>            for i in range(len(self.layout)):</span>
+<span>                for j in range(len(self.layout[0])):</span>
+<span>                    if self.layout[i][j] == ".":</span>
+<span>                        continue</span>
+<span></span>
+<span>                    occupied_around = self.count_occupied_around(i, j, first_visible)</span>
+<span></span>
+<span>                    if self.layout[i][j] == "L" and occupied_around == 0:</span>
+<span>                        new_layout[i][j] = "#"</span>
+<span>                        is_changing = True</span>
+<span>                    elif self.layout[i][j] == "#" and occupied_around >= rule:</span>
+<span>                        new_layout[i][j] = "L"</span>
+<span>                        is_changing = True</span>
+<span>                    else:</span>
+<span>                        new_layout[i][j] = self.layout[i][j]</span>
+<span></span>
+<span>            new_layout, self.layout = self.layout, new_layout</span>
+<span></span>
+<span>        return sum([sum([i == "#" for i in row]) for row in self.layout])</span>
+<span></span>
+<span>class Solution(InputAsLinesSolution):</span>
+<span>    _year = 2020</span>
+<span>    _day = 11</span>
+<span></span>
+<span>    def get_occupied_seats(self, lines):</span>
+<span>        seatMap = SeatMap(lines)</span>
+<span></span>
+<span>        return seatMap.count_occupied_seats()</span>
+<span></span>
+<span>    def get_occupied_seats_in_sight(self, lines):</span>
+<span>        seatMap = SeatMap(lines)</span>
+<span></span>
+<span>        return seatMap.count_occupied_seats(True, 5)</span>
+<span></span>
+<span>    def part_1(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_occupied_seats(self.input)</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("1", res, (end_time - start_time))</span>
+<span></span>
+<span>    def part_2(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_occupied_seats_in_sight(self.input)</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("2", res, (end_time - start_time))</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
+<span>    solution = Solution()</span>
+<span></span>
+<span>    solution.part_1()</span>
+<span>    </span>
+<span>    solution.part_2()</span>
 </pre>

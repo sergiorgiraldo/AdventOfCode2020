@@ -1,4 +1,32 @@
-<style>pre{font-size: large;}</style>
+<style>
+        pre {
+    background: #303030;
+    color: #f1f1f1;
+    padding: 10px 16px;
+    border-radius: 2px;
+    border-top: 4px solid #00aeef;
+    -moz-box-shadow: inset 0 0 10px #000;
+    box-shadow: inset 0 0 10px #000;
+    counter-reset: line;
+    }
+    pre span {
+    display: block;
+    line-height: 1.5rem;
+    }
+    pre span:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    padding: 0 .5em;
+    margin-right: .5em;
+    color: #888
+    }
+    span{
+        font-family: monospace;
+        font-size: 16px;
+    }
+    </style>
 <script src="script.js"></script>
 <div id="navigation">
 <button onclick="navigateTo('prev')">Previous Day</button>
@@ -6,82 +34,82 @@
 </div>
 <h1>Day 08</h1>
 <pre>
-# puzzle prompt: https://adventofcode.com/2020/day/8
-
-import time
-import sys
-sys.path.insert(0,"..")
-
-from base.advent import *
-
-class Solution(InputAsLinesSolution):
-    _year = 2020
-    _day = 8
-
-    #simple computer, i dont bother write an interpreter
-    def run(self, program):
-        acc, ip, offset = 0, 0, 1
-
-        visited = {}
-
-        while True:
-            if ip >= len(program):
-                return "fixed", acc
-            if ip in visited:
-                return "loop", acc
-            visited[ip] = True
-
-            instruction = program[ip]
-            offset = 1
-            
-            #nop instruction just increase the instruction pointer by 1
-            if instruction.startswith("acc"):
-                increment = int(instruction.split("acc")[1])
-                acc += increment
-            elif instruction.startswith("jmp"):
-                offset = int(instruction.split("jmp")[1])
-
-            ip += offset    
-
-    def get_accumulator_before_loop(self, program):
-        return self.run(program)[1]
-    
-    def get_accumulator_after_fix(self, program):
-        for instruction in range(len(program)):
-            new_program = program.copy()
-
-            if program[instruction].startswith("nop"):
-                new_program[instruction] = program[instruction].replace("nop", "jmp")
-            elif program[instruction].startswith("jmp"):
-                new_program[instruction] = program[instruction].replace("jmp", "nop")
-
-            result = self.run(new_program)
-            
-            if result[0] == "fixed":
-                return result[1]
-            
-    def part_1(self):
-        start_time = time.time()
-
-        res = self.get_accumulator_before_loop(self.input)
-
-        end_time = time.time()
-
-        self.solve("1", res, (end_time - start_time))
-
-    def part_2(self):
-        start_time = time.time()
-
-        res = self.get_accumulator_after_fix(self.input)
-
-        end_time = time.time()
-
-        self.solve("2", res, (end_time - start_time))
-
-if __name__ == '__main__':
-    solution = Solution()
-
-    solution.part_1()
-    
-    solution.part_2()
+<span># puzzle prompt: https://adventofcode.com/2020/day/8</span>
+<span></span>
+<span>import time</span>
+<span>import sys</span>
+<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>from base.advent import *</span>
+<span></span>
+<span>class Solution(InputAsLinesSolution):</span>
+<span>    _year = 2020</span>
+<span>    _day = 8</span>
+<span></span>
+<span>    #simple computer, i dont bother write an interpreter</span>
+<span>    def run(self, program):</span>
+<span>        acc, ip, offset = 0, 0, 1</span>
+<span></span>
+<span>        visited = {}</span>
+<span></span>
+<span>        while True:</span>
+<span>            if ip >= len(program):</span>
+<span>                return "fixed", acc</span>
+<span>            if ip in visited:</span>
+<span>                return "loop", acc</span>
+<span>            visited[ip] = True</span>
+<span></span>
+<span>            instruction = program[ip]</span>
+<span>            offset = 1</span>
+<span>            </span>
+<span>            #nop instruction just increase the instruction pointer by 1</span>
+<span>            if instruction.startswith("acc"):</span>
+<span>                increment = int(instruction.split("acc")[1])</span>
+<span>                acc += increment</span>
+<span>            elif instruction.startswith("jmp"):</span>
+<span>                offset = int(instruction.split("jmp")[1])</span>
+<span></span>
+<span>            ip += offset    </span>
+<span></span>
+<span>    def get_accumulator_before_loop(self, program):</span>
+<span>        return self.run(program)[1]</span>
+<span>    </span>
+<span>    def get_accumulator_after_fix(self, program):</span>
+<span>        for instruction in range(len(program)):</span>
+<span>            new_program = program.copy()</span>
+<span></span>
+<span>            if program[instruction].startswith("nop"):</span>
+<span>                new_program[instruction] = program[instruction].replace("nop", "jmp")</span>
+<span>            elif program[instruction].startswith("jmp"):</span>
+<span>                new_program[instruction] = program[instruction].replace("jmp", "nop")</span>
+<span></span>
+<span>            result = self.run(new_program)</span>
+<span>            </span>
+<span>            if result[0] == "fixed":</span>
+<span>                return result[1]</span>
+<span>            </span>
+<span>    def part_1(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_accumulator_before_loop(self.input)</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("1", res, (end_time - start_time))</span>
+<span></span>
+<span>    def part_2(self):</span>
+<span>        start_time = time.time()</span>
+<span></span>
+<span>        res = self.get_accumulator_after_fix(self.input)</span>
+<span></span>
+<span>        end_time = time.time()</span>
+<span></span>
+<span>        self.solve("2", res, (end_time - start_time))</span>
+<span></span>
+<span>if __name__ == '__main__':</span>
+<span>    solution = Solution()</span>
+<span></span>
+<span>    solution.part_1()</span>
+<span>    </span>
+<span>    solution.part_2()</span>
 </pre>
