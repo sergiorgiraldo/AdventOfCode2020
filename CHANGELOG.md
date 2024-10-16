@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.1.0](https://github.com/sergiorgiraldo/AdventOfCode2020/compare/v6.0.0...v6.1.0) (2024-06-28)
+
+
+### Features
+
+* navigation in the viewer ([6b0ed28](https://github.com/sergiorgiraldo/AdventOfCode2020/commit/6b0ed280c5dfd8c52b3f7e7a0aa04bf0b1b20b7c))
+
 ## [6.0.0](https://github.com/sergiorgiraldo/AdventOfCode2020/compare/v5.0.0...v6.0.0) (2024-04-17)
 
 
