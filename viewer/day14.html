@@ -38,13 +38,15 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from abc import ABC, abstractmethod</span>
 <span>from typing import final</span>
 <span></span>
 <span>SIZE = 36</span>
+<span></span>
 <span></span>
 <span>class DockingProgram(ABC):</span>
 <span>    def __init__(self, instructions):</span>
@@ -64,7 +66,7 @@
 <span>    def mask(self, value):</span>
 <span>        if self.mask_string is None:</span>
 <span>            return value</span>
-<span>        </span>
+<span></span>
 <span>        masked_value = ""</span>
 <span>        value = bin(value)[2:]</span>
 <span></span>
@@ -94,6 +96,7 @@
 <span>    def memory_status(self):</span>
 <span>        return sum(self.memory.values())</span>
 <span></span>
+<span></span>
 <span>class DockingProgram_V1(DockingProgram):</span>
 <span>    def mask_bit(self, mask, bit):</span>
 <span>        return bit if mask == "X" else mask</span>
@@ -101,6 +104,7 @@
 <span>    def write(self, mem_addr, value):</span>
 <span>        masked_value = self.mask(value)</span>
 <span>        self.memory[mem_addr] = int(masked_value, 2)</span>
+<span></span>
 <span></span>
 <span>class DockingProgram_V2(DockingProgram):</span>
 <span>    def mask_bit(self, mask, bit):</span>
@@ -113,12 +117,13 @@
 <span>                self.memory[addr] = value</span>
 <span>            else:</span>
 <span>                index = masked_addr.find("X")</span>
-<span>                helper(masked_addr[:index] + "1" + masked_addr[index+1:])</span>
-<span>                helper(masked_addr[:index] + "0" + masked_addr[index+1:])</span>
+<span>                helper(masked_addr[:index] + "1" + masked_addr[index + 1 :])</span>
+<span>                helper(masked_addr[:index] + "0" + masked_addr[index + 1 :])</span>
 <span></span>
 <span>        masked_addr = self.mask(mem_addr)</span>
 <span></span>
 <span>        helper(masked_addr)</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -126,14 +131,14 @@
 <span></span>
 <span>    def get_memory_v1(self, instructions):</span>
 <span>        program = DockingProgram_V1(instructions)</span>
-<span>        </span>
+<span></span>
 <span>        program.run()</span>
 <span></span>
 <span>        return program.memory_status</span>
 <span></span>
 <span>    def get_memory_v2(self, instructions):</span>
 <span>        program = DockingProgram_V2(instructions)</span>
-<span>        </span>
+<span></span>
 <span>        program.run()</span>
 <span></span>
 <span>        return program.memory_status</span>
@@ -156,10 +161,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

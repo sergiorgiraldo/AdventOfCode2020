@@ -2,9 +2,11 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -15,7 +17,7 @@ class Solution(InputAsLinesSolution):
             for j in range(i + 1, index):
                 if input[i] + input[j] == input[index]:
                     return True
-                
+
         return False
 
     def find_weak_number(self, lines, window=25):
@@ -24,7 +26,7 @@ class Solution(InputAsLinesSolution):
         for index in range(window, len(input)):
             if not self.is_sum_of_previous(input, window, index):
                 return input[index]
-        
+
     def find_encryption_weakness(self, lines, window=25):
         input = [int(n.strip()) for n in lines]
 
@@ -32,22 +34,22 @@ class Solution(InputAsLinesSolution):
 
         for size in range(2, len(input)):
             terms = self.find_contiguous_set(input, weak_number, size)
-            
+
             if len(terms):
                 return min(terms) + max(terms)
 
     def find_contiguous_set(self, input, number, size):
         for i in range(0, len(input) - size + 1):
             terms = []
-            
+
             for j in range(i, i + size):
                 terms.append(input[j])
 
             if sum(terms) == number:
                 return terms
-        
+
         return []
-                
+
     def part_1(self):
         start_time = time.time()
 
@@ -66,9 +68,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

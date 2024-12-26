@@ -38,9 +38,11 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -48,40 +50,39 @@
 <span></span>
 <span>    def parse(self, lines):</span>
 <span>        rules = dict()</span>
-<span>        </span>
+<span></span>
 <span>        for line in lines:</span>
 <span>            bag, contents = line.split(" bags contain ")</span>
 <span></span>
-<span>            rules[bag] = dict(</span>
-<span>                (words[1] + " " + words[2], int(words[0]))</span>
-<span>                for words in (bag.split() for bag in contents.split(", "))</span>
-<span>            ) if contents != "no other bags." else dict()</span>
+<span>            rules[bag] = (</span>
+<span>                dict(</span>
+<span>                    (words[1] + " " + words[2], int(words[0]))</span>
+<span>                    for words in (bag.split() for bag in contents.split(", "))</span>
+<span>                )</span>
+<span>                if contents != "no other bags."</span>
+<span>                else dict()</span>
+<span>            )</span>
 <span></span>
 <span>        return rules</span>
-<span>    </span>
+<span></span>
 <span>    def get_shiny_gold_bags(self, lines):</span>
 <span>        def holds(bag, target):</span>
-<span>            return any(</span>
-<span>                held == target or holds(held, target)</span>
-<span>                for held in rules[bag]</span>
-<span>            )</span>
-<span>        </span>
+<span>            return any(held == target or holds(held, target) for held in rules[bag])</span>
+<span></span>
 <span>        rules = self.parse(lines)</span>
 <span></span>
 <span>        return sum(1 for bag in rules if holds(bag, "shiny gold"))</span>
-<span>            </span>
 <span></span>
 <span>    def count_bags(self, rules, bag="shiny gold"):</span>
 <span>        return sum(</span>
-<span>            n * (1 + self.count_bags(rules, other))</span>
-<span>            for other, n in rules[bag].items()</span>
+<span>            n * (1 + self.count_bags(rules, other)) for other, n in rules[bag].items()</span>
 <span>        )</span>
-<span>    </span>
+<span></span>
 <span>    def get_contents_of_single_shiny_gold_bag(self, lines):</span>
 <span>        rules = self.parse(lines)</span>
-<span> </span>
+<span></span>
 <span>        return self.count_bags(rules)</span>
-<span>    </span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -100,10 +101,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

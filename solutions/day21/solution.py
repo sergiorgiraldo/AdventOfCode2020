@@ -2,10 +2,12 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 from collections import Counter
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -19,7 +21,7 @@ class Solution(InputAsLinesSolution):
             left, right = line.split(" (contains ")
             ingredients = set(left.split())
             allergens = set(right[:-1].split(", "))
-            
+
             for allergen in allergens:
                 if allergen not in allergen_suspects:
                     allergen_suspects[allergen] = ingredients.copy()
@@ -29,10 +31,14 @@ class Solution(InputAsLinesSolution):
             for ingredient in ingredients:
                 ingredient_occurrences[ingredient] += 1
 
-        return sum(
-            n for i, n in ingredient_occurrences.items()
-            if all(i not in suspects for suspects in allergen_suspects.values())
-        ), allergen_suspects
+        return (
+            sum(
+                n
+                for i, n in ingredient_occurrences.items()
+                if all(i not in suspects for suspects in allergen_suspects.values())
+            ),
+            allergen_suspects,
+        )
 
     def get_unsafe_ingredients(self, lines):
         allergen_suspects = self.get_safe_ingredients(lines)[1]
@@ -46,8 +52,11 @@ class Solution(InputAsLinesSolution):
                     else:
                         suspects -= set(allergen_confirmed.values())
 
-        unsafe_ingredients = [allergen_confirmed[allergen] for allergen in sorted(allergen_confirmed.keys())]
-        
+        unsafe_ingredients = [
+            allergen_confirmed[allergen]
+            for allergen in sorted(allergen_confirmed.keys())
+        ]
+
         return ",".join(unsafe_ingredients)
 
     def part_1(self):
@@ -68,9 +77,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

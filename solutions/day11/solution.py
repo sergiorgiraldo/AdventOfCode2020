@@ -2,24 +2,28 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class SeatMap:
     # o o o
     # o | o
     # o o o
-    directions = [(-1, -1), (-1, 0), (-1, 1),
-                  (0, -1), (0, 1), 
-                  (1, -1), (1, 0), (1, 1)]
-    
+    directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+
     def __init__(self, layout):
         self.layout_original = [[ch for ch in row] for row in layout]
 
     def check_valid_position(self, row, col):
-        return row >= 0 and row < len(self.layout) and \
-               col >= 0 and col < len(self.layout[0])
+        return (
+            row >= 0
+            and row < len(self.layout)
+            and col >= 0
+            and col < len(self.layout[0])
+        )
 
     def check_occupied(self, row: int, col: int, direction, first_visible):
         row += direction[0]
@@ -30,7 +34,7 @@ class SeatMap:
                 return True
             if self.layout[row][col] == "." and first_visible:
                 return self.check_occupied(row, col, direction, first_visible)
-            
+
         return False
 
     def count_occupied_around(self, row, col, first_visible):
@@ -42,9 +46,9 @@ class SeatMap:
 
         return cnt
 
-    def count_occupied_seats(self, first_visible = False, rule = 4):
+    def count_occupied_seats(self, first_visible=False, rule=4):
         self.layout = [[ch for ch in row] for row in self.layout_original]
-        new_layout  = [[ch for ch in row] for row in self.layout]
+        new_layout = [[ch for ch in row] for row in self.layout]
 
         is_changing = True
 
@@ -70,6 +74,7 @@ class SeatMap:
             new_layout, self.layout = self.layout, new_layout
 
         return sum([sum([i == "#" for i in row]) for row in self.layout])
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -103,9 +108,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
+
 if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

@@ -2,11 +2,13 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 from collections import defaultdict
 from operator import itemgetter as get
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -26,27 +28,27 @@ class Solution(InputAsLinesSolution):
                         self.offsets4d.add((x, y, z, w))
                     self.offsets3d.add((x, y, z))
 
-        self.offsets3d.remove((0,)*3)
-        self.offsets4d.remove((0,)*4)
+        self.offsets3d.remove((0,) * 3)
+        self.offsets4d.remove((0,) * 4)
 
         for y, line in enumerate(lines):
             for x, char in enumerate(line):
-                val = (char == "#")
+                val = char == "#"
                 self.space3d[x, y, 0] = val
                 self.space4d[x, y, 0, 0] = val
-        
+
         self.prev_space3d = self.space3d.copy()
         self.prev_space4d = self.space4d.copy()
 
     def get_maxes(self, four):
         keys = (self.space4d if four else self.space3d).keys()
-        
+
         boundaries = [max(keys, key=get(i))[i] + 1 for i in range(3)]
 
         if four:
             max_w = max(keys, key=get(3))[3] + 1
             boundaries = *boundaries, max_w
-        
+
         return boundaries
 
     def get_mins(self, four):
@@ -57,37 +59,32 @@ class Solution(InputAsLinesSolution):
         if four:
             min_w = min(keys, key=get(3))[3]
             boundaries = *boundaries, min_w
-        
+
         return boundaries
 
     def get_cubes3d(self, x, y, z):
         count = 0
-    
+
         for offset in self.offsets3d:
-            if self.prev_space3d[
-                    x+offset[0],
-                    y+offset[1],
-                    z+offset[2]]:
+            if self.prev_space3d[x + offset[0], y + offset[1], z + offset[2]]:
                 count += 1
-    
-        return count
-    
-    def get_cubes4d(self, x, y, z, w):
-        count = 0
-    
-        for offset in self.offsets4d:
-            if self.prev_space4d[
-                    x+offset[0],
-                    y+offset[1],
-                    z+offset[2],
-                    w+offset[3]]:
-                count += 1
-    
+
         return count
 
-    def boot_3d(self, lines, maxstep = 6):
+    def get_cubes4d(self, x, y, z, w):
+        count = 0
+
+        for offset in self.offsets4d:
+            if self.prev_space4d[
+                x + offset[0], y + offset[1], z + offset[2], w + offset[3]
+            ]:
+                count += 1
+
+        return count
+
+    def boot_3d(self, lines, maxstep=6):
         self.parse(lines)
-        
+
         for _ in range(maxstep):
             self.prev_space3d = self.space3d.copy()
             min_x, min_y, min_z = self.get_mins(False)
@@ -106,7 +103,7 @@ class Solution(InputAsLinesSolution):
 
         return sum(self.space3d.values())
 
-    def boot_4d(self, lines, maxstep = 6):
+    def boot_4d(self, lines, maxstep=6):
         self.parse(lines)
 
         for _ in range(maxstep):
@@ -146,9 +143,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

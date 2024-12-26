@@ -38,16 +38,18 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from collections import defaultdict</span>
 <span>from functools import lru_cache</span>
 <span></span>
+<span></span>
 <span># i kept it simple, there are only 3 possible rules</span>
-<span># strings "a" or "b"  </span>
+<span># strings "a" or "b"</span>
 <span># concatenate other rules i.e. numbers -> 8 11</span>
-<span># options, it is always a pair of rules separated by pipe -> 14 3 | 1 12 </span>
+<span># options, it is always a pair of rules separated by pipe -> 14 3 | 1 12</span>
 <span>class Rules:</span>
 <span>    def __init__(self, rule_specs):</span>
 <span>        self.rules = defaultdict(list)</span>
@@ -56,10 +58,10 @@
 <span>            rule = rule.split(": ")</span>
 <span>            rule_number = rule[0]</span>
 <span>            matches = rule[1].split(" | ")</span>
-<span>        </span>
+<span></span>
 <span>            for match in matches:</span>
-<span>                if "\"" in match:</span>
-<span>                    self.rules[rule_number].append(match.replace("\"", ""))</span>
+<span>                if '"' in match:</span>
+<span>                    self.rules[rule_number].append(match.replace('"', ""))</span>
 <span>                else:</span>
 <span>                    self.rules[rule_number].append(match.split(" "))</span>
 <span></span>
@@ -71,18 +73,18 @@
 <span>    def _match(self, rule, idx, message):</span>
 <span>        if idx == len(message):</span>
 <span>            return []</span>
-<span>        </span>
+<span></span>
 <span>        results = []</span>
-<span>        </span>
+<span></span>
 <span>        for rule in self.rules[rule]:</span>
-<span>            if type(rule) == str: # "a" or "b"</span>
+<span>            if type(rule) == str:  # "a" or "b"</span>
 <span>                if rule == message[idx]:</span>
 <span>                    # return the length matched</span>
-<span>                    return [idx+1]</span>
+<span>                    return [idx + 1]</span>
 <span>                else:</span>
 <span>                    return []</span>
 <span>            start_idx = [idx]</span>
-<span>        </span>
+<span></span>
 <span>            for sub_rule in rule:</span>
 <span>                new_start_idx = []</span>
 <span>                for i in start_idx:</span>
@@ -90,7 +92,7 @@
 <span>                    new_start_idx.extend(sub_results)</span>
 <span>                start_idx = new_start_idx</span>
 <span>            results.extend(start_idx)</span>
-<span>        </span>
+<span></span>
 <span>        return results</span>
 <span></span>
 <span></span>
@@ -112,15 +114,15 @@
 <span>        rule_specs, messages = self.parse(lines)</span>
 <span></span>
 <span>        rules = Rules(rule_specs)</span>
-<span>        </span>
+<span></span>
 <span>        return self.count_match_message(rules, messages)</span>
 <span></span>
 <span>    def get_matches_rule0_after_fix(self, lines):</span>
 <span>        rule_specs, messages = self.parse(lines)</span>
-<span>        </span>
-<span>        fixed_rules = rule_specs                                        \</span>
-<span>                        .replace("11: 42 31", "11: 42 31 | 42 11 31")   \</span>
-<span>                        .replace("8: 42", "8: 42 | 42 8") # fix from the puzzle</span>
+<span></span>
+<span>        fixed_rules = rule_specs.replace("11: 42 31", "11: 42 31 | 42 11 31").replace(</span>
+<span>            "8: 42", "8: 42 | 42 8"</span>
+<span>        )  # fix from the puzzle</span>
 <span></span>
 <span>        rules = Rules(fixed_rules)</span>
 <span></span>
@@ -144,10 +146,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

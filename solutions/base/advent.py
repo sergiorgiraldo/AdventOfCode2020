@@ -8,6 +8,7 @@ from typing import final
 class AoCException(Exception):
     pass
 
+
 # Abstract Solution
 
 
@@ -15,7 +16,14 @@ class BaseSolution(ABC):
     _year: int
     _day: int
 
-    def __init__(cls, lines=False, csv=False, two_dimensional=False, int_csvline=False, block=False):
+    def __init__(
+        cls,
+        lines=False,
+        csv=False,
+        two_dimensional=False,
+        int_csvline=False,
+        block=False,
+    ):
         if lines:
             cls.input = cls.read_input().splitlines()
         else:
@@ -28,13 +36,13 @@ class BaseSolution(ABC):
                     lines = cls.read_input().splitlines()
 
                     cls.input = [list(line) for line in lines]
-                else:  
-                    if int_csvline: #single line
+                else:
+                    if int_csvline:  # single line
                         line = cls.read_input().strip()
-                        
+
                         cls.input = [int(d) for d in line.split(",")]
                     else:
-                        if block: #blocks separated by newline
+                        if block:  # blocks separated by newline
                             lines = cls.read_input()
 
                             cls.input = lines.split("\n\n")
@@ -87,9 +95,9 @@ class BaseSolution(ABC):
         )
 
         if path.exists(answer_path):
-            open(answer_path, 'w').close()  # always overwrite
+            open(answer_path, "w").close()  # always overwrite
 
-        with (answer_path.open("a")) as f:
+        with answer_path.open("a") as f:
             f.write(res + "\n")
             f.write(int(tm * 1000).__str__() + " msecs")
 
@@ -105,45 +113,67 @@ class BaseSolution(ABC):
         if submit:
             self.submit(part="a" if part == "1" else "b", res=res)
 
+
 # Concrete Solutions
 class InputAsStringSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=False, block=False)
+        super().__init__(
+            lines=False,
+            csv=False,
+            two_dimensional=False,
+            int_csvline=False,
+            block=False,
+        )
 
     def dummy(self):
         pass
+
 
 class InputAsLinesSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=True, csv=False, two_dimensional=False, int_csvline=False, block=False)
+        super().__init__(
+            lines=True, csv=False, two_dimensional=False, int_csvline=False, block=False
+        )
 
     def dummy(self):
         pass
-    
+
+
 class InputAsCSVSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=True, two_dimensional=False, int_csvline=False, block=False)
+        super().__init__(
+            lines=False, csv=True, two_dimensional=False, int_csvline=False, block=False
+        )
 
     def dummy(self):
         pass
+
 
 class InputAsIntCSVLineSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=True, block=False)
+        super().__init__(
+            lines=False, csv=False, two_dimensional=False, int_csvline=True, block=False
+        )
 
     def dummy(self):
         pass
+
 
 class InputAs2DSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=True, int_csvline=False, block=False)
+        super().__init__(
+            lines=False, csv=False, two_dimensional=True, int_csvline=False, block=False
+        )
 
     def dummy(self):
         pass
 
+
 class InputAsBlockSolution(BaseSolution):
     def __init__(self):
-        super().__init__(lines=False, csv=False, two_dimensional=False, int_csvline=False, block=True)
+        super().__init__(
+            lines=False, csv=False, two_dimensional=False, int_csvline=False, block=True
+        )
 
     def dummy(self):
         pass

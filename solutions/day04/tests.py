@@ -4,6 +4,7 @@ from solution import Solution
 
 solution = Solution()
 
+
 class Tests(unittest.TestCase):
     def test_part1(self):
         list = """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
@@ -22,11 +23,12 @@ iyr:2011 ecl:brn hgt:59in"""
 
         self.assertEqual(solution.check_passports_loose(list), 2, "Oops")
 
-    #def test_part2(self):
+    # def test_part2(self):
     #    self.assertEqual(solution.part2(), "", "Oops")
 
     def test_sanity_check(self):
         self.assertEqual(1 + 1, 2, "Oops")
+
 
 if __name__ == "__main__":
     unittest.main()

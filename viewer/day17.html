@@ -38,11 +38,13 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from collections import defaultdict</span>
 <span>from operator import itemgetter as get</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -62,27 +64,27 @@
 <span>                        self.offsets4d.add((x, y, z, w))</span>
 <span>                    self.offsets3d.add((x, y, z))</span>
 <span></span>
-<span>        self.offsets3d.remove((0,)*3)</span>
-<span>        self.offsets4d.remove((0,)*4)</span>
+<span>        self.offsets3d.remove((0,) * 3)</span>
+<span>        self.offsets4d.remove((0,) * 4)</span>
 <span></span>
 <span>        for y, line in enumerate(lines):</span>
 <span>            for x, char in enumerate(line):</span>
-<span>                val = (char == "#")</span>
+<span>                val = char == "#"</span>
 <span>                self.space3d[x, y, 0] = val</span>
 <span>                self.space4d[x, y, 0, 0] = val</span>
-<span>        </span>
+<span></span>
 <span>        self.prev_space3d = self.space3d.copy()</span>
 <span>        self.prev_space4d = self.space4d.copy()</span>
 <span></span>
 <span>    def get_maxes(self, four):</span>
 <span>        keys = (self.space4d if four else self.space3d).keys()</span>
-<span>        </span>
+<span></span>
 <span>        boundaries = [max(keys, key=get(i))[i] + 1 for i in range(3)]</span>
 <span></span>
 <span>        if four:</span>
 <span>            max_w = max(keys, key=get(3))[3] + 1</span>
 <span>            boundaries = *boundaries, max_w</span>
-<span>        </span>
+<span></span>
 <span>        return boundaries</span>
 <span></span>
 <span>    def get_mins(self, four):</span>
@@ -93,37 +95,32 @@
 <span>        if four:</span>
 <span>            min_w = min(keys, key=get(3))[3]</span>
 <span>            boundaries = *boundaries, min_w</span>
-<span>        </span>
+<span></span>
 <span>        return boundaries</span>
 <span></span>
 <span>    def get_cubes3d(self, x, y, z):</span>
 <span>        count = 0</span>
-<span>    </span>
+<span></span>
 <span>        for offset in self.offsets3d:</span>
-<span>            if self.prev_space3d[</span>
-<span>                    x+offset[0],</span>
-<span>                    y+offset[1],</span>
-<span>                    z+offset[2]]:</span>
+<span>            if self.prev_space3d[x + offset[0], y + offset[1], z + offset[2]]:</span>
 <span>                count += 1</span>
-<span>    </span>
-<span>        return count</span>
-<span>    </span>
-<span>    def get_cubes4d(self, x, y, z, w):</span>
-<span>        count = 0</span>
-<span>    </span>
-<span>        for offset in self.offsets4d:</span>
-<span>            if self.prev_space4d[</span>
-<span>                    x+offset[0],</span>
-<span>                    y+offset[1],</span>
-<span>                    z+offset[2],</span>
-<span>                    w+offset[3]]:</span>
-<span>                count += 1</span>
-<span>    </span>
+<span></span>
 <span>        return count</span>
 <span></span>
-<span>    def boot_3d(self, lines, maxstep = 6):</span>
+<span>    def get_cubes4d(self, x, y, z, w):</span>
+<span>        count = 0</span>
+<span></span>
+<span>        for offset in self.offsets4d:</span>
+<span>            if self.prev_space4d[</span>
+<span>                x + offset[0], y + offset[1], z + offset[2], w + offset[3]</span>
+<span>            ]:</span>
+<span>                count += 1</span>
+<span></span>
+<span>        return count</span>
+<span></span>
+<span>    def boot_3d(self, lines, maxstep=6):</span>
 <span>        self.parse(lines)</span>
-<span>        </span>
+<span></span>
 <span>        for _ in range(maxstep):</span>
 <span>            self.prev_space3d = self.space3d.copy()</span>
 <span>            min_x, min_y, min_z = self.get_mins(False)</span>
@@ -142,7 +139,7 @@
 <span></span>
 <span>        return sum(self.space3d.values())</span>
 <span></span>
-<span>    def boot_4d(self, lines, maxstep = 6):</span>
+<span>    def boot_4d(self, lines, maxstep=6):</span>
 <span>        self.parse(lines)</span>
 <span></span>
 <span>        for _ in range(maxstep):</span>
@@ -182,10 +179,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

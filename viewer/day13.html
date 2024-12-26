@@ -38,10 +38,12 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from math import gcd</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -68,17 +70,17 @@
 <span></span>
 <span>            interval = int(bus)</span>
 <span>            departures = int(time_to_leave / interval)</span>
-<span>            next_bus = (departures + 1) * interval #next bus after my time to leave</span>
+<span>            next_bus = (departures + 1) * interval  # next bus after my time to leave</span>
 <span>            wait_time = next_bus - time_to_leave</span>
 <span>            buses_in_service.append(interval)</span>
 <span>            wait_times.append(wait_time)</span>
 <span></span>
 <span>        my_bus = wait_times.index(min(wait_times))</span>
-<span>        </span>
+<span></span>
 <span>        return buses_in_service[my_bus] * wait_times[my_bus]</span>
 <span></span>
 <span>    # we need to find a number such that the remainders of all the buses are consecutive after N departures</span>
-<span>    # suppose we have 3 buses: 3, 5, 7. After N departures, from perspective of the third bus, time elapsed is 7N </span>
+<span>    # suppose we have 3 buses: 3, 5, 7. After N departures, from perspective of the third bus, time elapsed is 7N</span>
 <span>    # from 2nd bus perspective, to win the gold coin, it left at 7N - 1, so the remainder of 7N divided by 5 is 1</span>
 <span>    # from 1st bus perspective, to win the gold coin, it left at 7N - 2, so the remainder of 7N divided by 3 is 2</span>
 <span></span>
@@ -86,9 +88,9 @@
 <span>    #                   bus 31 leaves at t=1068787 -> 34477 * 31 + 1 (1068788 / 31 gives remainder 1)</span>
 <span>    #                   bus 59 leaves at t=1068786 -> 18115 * 59 + 2 (1068788 / 59 gives remainder 2)</span>
 <span></span>
-<span>    # the **Chinese remainder theorem** states that if one knows the remainders of the Euclidean division of </span>
-<span>    # an integer n by several integers, then one can determine uniquely the remainder of the division of n by </span>
-<span>    # the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors </span>
+<span>    # the **Chinese remainder theorem** states that if one knows the remainders of the Euclidean division of</span>
+<span>    # an integer n by several integers, then one can determine uniquely the remainder of the division of n by</span>
+<span>    # the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors</span>
 <span>    # share a common factor other than 1).</span>
 <span>    # https://en.wikipedia.org/wiki/Chinese_remainder_theorem</span>
 <span></span>
@@ -96,13 +98,13 @@
 <span>    # https://www.math.cmu.edu/~mradclif/teaching/127S19/Notes/ChineseRemainderTheorem.pdf</span>
 <span>    # https://www.youtube.com/watch?v=ru7mWZJlRQg</span>
 <span></span>
-<span>    def coprime(self,n):</span>
-<span>        coprimes = 0        </span>
-<span>        for i in range(1, n+1):</span>
+<span>    def coprime(self, n):</span>
+<span>        coprimes = 0</span>
+<span>        for i in range(1, n + 1):</span>
 <span>            if gcd(n, i) == 1:</span>
 <span>                coprimes += 1</span>
 <span>        return coprimes</span>
-<span>    </span>
+<span></span>
 <span>    def win_gold_coin(self, lines):</span>
 <span>        _, buses = self.parse(lines)</span>
 <span></span>
@@ -119,10 +121,10 @@
 <span></span>
 <span>        for bus in buses_in_service:</span>
 <span>            buses_product *= bus</span>
-<span>        </span>
+<span></span>
 <span>        sum = 0</span>
 <span></span>
-<span>        for i in range(len(buses_in_service)): </span>
+<span>        for i in range(len(buses_in_service)):</span>
 <span>            bus = buses_in_service[i]</span>
 <span>            remainder = (bus - offsets[i]) % bus</span>
 <span>            b = int(buses_product / bus) ** (self.coprime(bus) - 1) % bus</span>
@@ -148,10 +150,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

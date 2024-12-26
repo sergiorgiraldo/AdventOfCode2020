@@ -2,10 +2,12 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 from collections import defaultdict
+
 
 class FieldRule:
     def __init__(self, rule: str):
@@ -18,8 +20,11 @@ class FieldRule:
         return int(range[0]), int(range[1])
 
     def validate(self, value):
-        return self.first_range[0] <= value <= self.first_range[1] or\
-            self.second_range[0] <= value <= self.second_range[1]
+        return (
+            self.first_range[0] <= value <= self.first_range[1]
+            or self.second_range[0] <= value <= self.second_range[1]
+        )
+
 
 class TicketRule:
     def __init__(self, rules: str):
@@ -64,8 +69,7 @@ class TicketRule:
                     possile_idx[field].append(i)
 
         # Sort by len of possible choices to help find faster.
-        possible_idx_len = [(len(possile_idx[field]), field)
-                            for field in self.rules]
+        possible_idx_len = [(len(possile_idx[field]), field) for field in self.rules]
         possible_idx_len.sort()
 
         used_indices = [False] * len(self.rules)
@@ -85,6 +89,7 @@ class TicketRule:
 
         helper(0)
 
+
 class Solution(InputAsStringSolution):
     _year = 2020
     _day = 16
@@ -97,7 +102,9 @@ class Solution(InputAsStringSolution):
         my_ticket = [int(value) for value in my_ticket.split(",")]
 
         nearby_tickets = parts[2].splitlines()[1:]
-        nearby_tickets = [[int(value) for value in ticket.split(",")] for ticket in nearby_tickets]
+        nearby_tickets = [
+            [int(value) for value in ticket.split(",")] for ticket in nearby_tickets
+        ]
 
         return rule, my_ticket, nearby_tickets
 
@@ -111,18 +118,18 @@ class Solution(InputAsStringSolution):
     def determine_my_ticket(self, lines):
         _, my_ticket, _ = self.parse(lines)
 
-        rule = self.get_error_rate(lines)[0] #get rid of invalid tickets
+        rule = self.get_error_rate(lines)[0]  # get rid of invalid tickets
 
         rule.detect_index()
         indices = []
         for field in rule.rules:
-            if 'departure' in field:
+            if "departure" in field:
                 indices.append(rule.rule_index[field])
 
         result = 1
         for idx in indices:
             result *= my_ticket[idx]
-        
+
         return rule, result
 
     def part_1(self):
@@ -143,9 +150,10 @@ class Solution(InputAsStringSolution):
 
         self.solve("2", res, (end_time - start_time))
 
+
 if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

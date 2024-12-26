@@ -4,6 +4,7 @@ from solution import Solution
 
 solution = Solution()
 
+
 class Tests(unittest.TestCase):
     def test_part1(self):
         list = "389125467"
@@ -18,6 +19,7 @@ class Tests(unittest.TestCase):
 
     def test_sanity_check(self):
         self.assertEqual(1 + 1, 2, "Oops")
+
 
 if __name__ == "__main__":
     unittest.main()

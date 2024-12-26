@@ -2,6 +2,8 @@
 
 # ./build-viewer $1
 
+black .
+
 git bumpmajor
 
 git add --all . 

@@ -38,11 +38,13 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from collections import defaultdict</span>
 <span>import re</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -54,11 +56,15 @@
 <span>        if position in self.neighbourhood:</span>
 <span>            return self.neighbourhood[position]</span>
 <span></span>
-<span>        positions = [   </span>
-<span>                    (position[0] + 1, position[1] + 1), (position[0] - 1, position[1] + 1), </span>
-<span>                    (position[0] - 2, position[1]), (position[0] + 2, position[1]),</span>
-<span>                    (position[0] - 1, position[1] - 1), (position[0] + 1, position[1] - 1)]</span>
-<span>        </span>
+<span>        positions = [</span>
+<span>            (position[0] + 1, position[1] + 1),</span>
+<span>            (position[0] - 1, position[1] + 1),</span>
+<span>            (position[0] - 2, position[1]),</span>
+<span>            (position[0] + 2, position[1]),</span>
+<span>            (position[0] - 1, position[1] - 1),</span>
+<span>            (position[0] + 1, position[1] - 1),</span>
+<span>        ]</span>
+<span></span>
 <span>        self.neighbourhood[position] = positions</span>
 <span></span>
 <span>        return positions</span>
@@ -101,11 +107,16 @@
 <span></span>
 <span>            for k, v in tiles_to_consider.items():</span>
 <span>                neighbours = self.neighbours_of(k)</span>
-<span>                </span>
-<span>                colors = [tiles[neighbour] if neighbour in tiles else False for neighbour in neighbours]</span>
+<span></span>
+<span>                colors = [</span>
+<span>                    tiles[neighbour] if neighbour in tiles else False</span>
+<span>                    for neighbour in neighbours</span>
+<span>                ]</span>
 <span></span>
 <span>                if v:</span>
-<span>                    new_tiles[k] = not (colors.count(True) == 0 or colors.count(True) > 2)</span>
+<span>                    new_tiles[k] = not (</span>
+<span>                        colors.count(True) == 0 or colors.count(True) > 2</span>
+<span>                    )</span>
 <span>                else:</span>
 <span>                    new_tiles[k] = colors.count(True) == 2</span>
 <span></span>
@@ -131,10 +142,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

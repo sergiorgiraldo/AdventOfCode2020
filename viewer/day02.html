@@ -39,24 +39,27 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>import re</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 2</span>
 <span></span>
-<span>    def policy_1(self, word, chr, lo, hi): return \</span>
-<span>        word.count(chr) in range(lo, hi+1)</span>
+<span>    def policy_1(self, word, chr, lo, hi):</span>
+<span>        return word.count(chr) in range(lo, hi + 1)</span>
 <span></span>
-<span>    def policy_2(self, word, chr, lo, hi): return \</span>
-<span>        (word[lo-1] == chr and word[hi-1] != chr) or \</span>
-<span>        (word[lo-1] != chr and word[hi-1] == chr)</span>
+<span>    def policy_2(self, word, chr, lo, hi):</span>
+<span>        return (word[lo - 1] == chr and word[hi - 1] != chr) or (</span>
+<span>            word[lo - 1] != chr and word[hi - 1] == chr</span>
+<span>        )</span>
 <span></span>
 <span>    def count_passwords(self, lines, in_policy):</span>
-<span>        regex = re.compile(r"(\d+)-(\d+) ([a-z]): ([a-z]+)") # 4-5 m: mmpth</span>
+<span>        regex = re.compile(r"(\d+)-(\d+) ([a-z]): ([a-z]+)")  # 4-5 m: mmpth</span>
 <span></span>
 <span>        count = 0</span>
 <span></span>
@@ -91,7 +94,7 @@
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>

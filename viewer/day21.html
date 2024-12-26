@@ -38,10 +38,12 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from collections import Counter</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -55,7 +57,7 @@
 <span>            left, right = line.split(" (contains ")</span>
 <span>            ingredients = set(left.split())</span>
 <span>            allergens = set(right[:-1].split(", "))</span>
-<span>            </span>
+<span></span>
 <span>            for allergen in allergens:</span>
 <span>                if allergen not in allergen_suspects:</span>
 <span>                    allergen_suspects[allergen] = ingredients.copy()</span>
@@ -65,10 +67,14 @@
 <span>            for ingredient in ingredients:</span>
 <span>                ingredient_occurrences[ingredient] += 1</span>
 <span></span>
-<span>        return sum(</span>
-<span>            n for i, n in ingredient_occurrences.items()</span>
-<span>            if all(i not in suspects for suspects in allergen_suspects.values())</span>
-<span>        ), allergen_suspects</span>
+<span>        return (</span>
+<span>            sum(</span>
+<span>                n</span>
+<span>                for i, n in ingredient_occurrences.items()</span>
+<span>                if all(i not in suspects for suspects in allergen_suspects.values())</span>
+<span>            ),</span>
+<span>            allergen_suspects,</span>
+<span>        )</span>
 <span></span>
 <span>    def get_unsafe_ingredients(self, lines):</span>
 <span>        allergen_suspects = self.get_safe_ingredients(lines)[1]</span>
@@ -82,8 +88,11 @@
 <span>                    else:</span>
 <span>                        suspects -= set(allergen_confirmed.values())</span>
 <span></span>
-<span>        unsafe_ingredients = [allergen_confirmed[allergen] for allergen in sorted(allergen_confirmed.keys())]</span>
-<span>        </span>
+<span>        unsafe_ingredients = [</span>
+<span>            allergen_confirmed[allergen]</span>
+<span>            for allergen in sorted(allergen_confirmed.keys())</span>
+<span>        ]</span>
+<span></span>
 <span>        return ",".join(unsafe_ingredients)</span>
 <span></span>
 <span>    def part_1(self):</span>
@@ -104,10 +113,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

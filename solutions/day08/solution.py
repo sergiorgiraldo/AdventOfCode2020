@@ -2,15 +2,17 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
     _day = 8
 
-    #simple computer, i dont bother write an interpreter
+    # simple computer, i dont bother write an interpreter
     def run(self, program):
         acc, ip, offset = 0, 0, 1
 
@@ -25,19 +27,19 @@ class Solution(InputAsLinesSolution):
 
             instruction = program[ip]
             offset = 1
-            
-            #nop instruction just increase the instruction pointer by 1
+
+            # nop instruction just increase the instruction pointer by 1
             if instruction.startswith("acc"):
                 increment = int(instruction.split("acc")[1])
                 acc += increment
             elif instruction.startswith("jmp"):
                 offset = int(instruction.split("jmp")[1])
 
-            ip += offset    
+            ip += offset
 
     def get_accumulator_before_loop(self, program):
         return self.run(program)[1]
-    
+
     def get_accumulator_after_fix(self, program):
         for instruction in range(len(program)):
             new_program = program.copy()
@@ -48,10 +50,10 @@ class Solution(InputAsLinesSolution):
                 new_program[instruction] = program[instruction].replace("jmp", "nop")
 
             result = self.run(new_program)
-            
+
             if result[0] == "fixed":
                 return result[1]
-            
+
     def part_1(self):
         start_time = time.time()
 
@@ -70,9 +72,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

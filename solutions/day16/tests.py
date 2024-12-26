@@ -4,6 +4,7 @@ from solution import Solution
 
 solution = Solution()
 
+
 class Tests(unittest.TestCase):
     def test_part1(self):
         list = """class: 1-3 or 5-7
@@ -45,6 +46,7 @@ nearby tickets:
 
     def test_sanity_check(self):
         self.assertEqual(1 + 1, 2, "Oops")
+
 
 if __name__ == "__main__":
     unittest.main()

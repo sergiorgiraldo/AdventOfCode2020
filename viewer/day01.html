@@ -38,9 +38,11 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -53,7 +55,7 @@
 <span>            for j in range(i, len(entries)):</span>
 <span>                if entries[i] + entries[j] == 2020:</span>
 <span>                    return entries[i] * entries[j]</span>
-<span>                    </span>
+<span></span>
 <span>    def find_2020_3entries(self, lines):</span>
 <span>        entries = [int(n.strip()) for n in lines]</span>
 <span></span>
@@ -62,7 +64,7 @@
 <span>                for k in range(j, len(entries)):</span>
 <span>                    if entries[i] + entries[j] + entries[k] == 2020:</span>
 <span>                        return entries[i] * entries[j] * entries[k]</span>
-<span>                </span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -81,10 +83,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

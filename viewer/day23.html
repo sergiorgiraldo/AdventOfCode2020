@@ -38,45 +38,48 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from itertools import islice, chain, count</span>
 <span></span>
-<span>#poor man's linked list</span>
+<span></span>
+<span># poor man's linked list</span>
 <span>class Cup:</span>
 <span>    label: int</span>
 <span>    succ: "Cup"</span>
 <span></span>
-<span>    def __init__(self, label, succ = None):</span>
+<span>    def __init__(self, label, succ=None):</span>
 <span>        self.label = label</span>
 <span>        if succ is None:</span>
 <span>            self.succ = self</span>
 <span>        else:</span>
 <span>            self.succ = succ</span>
-<span>	</span>
+<span></span>
 <span>    def insert_succ(self, cup):</span>
 <span>        cup.succ = self.succ</span>
 <span>        self.succ = cup</span>
-<span>	</span>
+<span></span>
 <span>    def remove_succ(self):</span>
 <span>        succ = self.succ</span>
 <span>        self.succ = succ.succ</span>
 <span>        return succ</span>
-<span>	</span>
+<span></span>
 <span>    def labels(self):</span>
 <span>        yield self.label</span>
 <span>        cup = self.succ</span>
 <span>        while cup != self:</span>
 <span>            yield cup.label</span>
 <span>            cup = cup.succ</span>
-<span>	</span>
+<span></span>
 <span>    def cups(self):</span>
 <span>        yield self</span>
 <span>        cup = self.succ</span>
 <span>        while cup != self:</span>
 <span>            yield cup</span>
 <span>            cup = cup.succ</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsStringSolution):</span>
 <span>    _year = 2020</span>
@@ -85,14 +88,14 @@
 <span>    def make_circle(self, labels):</span>
 <span>        reversed_labels = iter(reversed(list(labels)))</span>
 <span>        head = last = Cup(next(reversed_labels))</span>
-<span>        </span>
+<span></span>
 <span>        for label in reversed_labels:</span>
 <span>            head = Cup(label, head)</span>
-<span>            </span>
+<span></span>
 <span>        last.succ = head</span>
 <span></span>
 <span>        return head</span>
-<span>    </span>
+<span></span>
 <span>    def get_cups(self, head, moves):</span>
 <span>        cups = dict((cup.label, cup) for cup in head.cups())</span>
 <span>        lowest, highest = min(cups), max(cups)</span>
@@ -101,25 +104,27 @@
 <span>            picked = [head.remove_succ() for _ in range(3)]</span>
 <span>            picked_labels = {cup.label for cup in picked}</span>
 <span>            dest = head.label - 1</span>
-<span>            </span>
+<span></span>
 <span>            while (a := dest < lowest) or (_ := dest in picked_labels):</span>
-<span>                if a: </span>
+<span>                if a:</span>
 <span>                    dest = highest</span>
-<span>                else: </span>
+<span>                else:</span>
 <span>                    dest -= 1</span>
 <span></span>
 <span>            while picked:</span>
 <span>                cups[dest].insert_succ(picked.pop())</span>
-<span>            </span>
+<span></span>
 <span>            head = head.succ</span>
-<span>        </span>
+<span></span>
 <span>        return cups[1]</span>
 <span></span>
-<span>    def play(self, input, moves = 100):</span>
+<span>    def play(self, input, moves=100):</span>
 <span>        labels = list(map(int, input))</span>
 <span></span>
-<span>        return "".join(map(str, self.get_cups(self.make_circle(labels), moves).labels()))[1:]</span>
-<span>    </span>
+<span>        return "".join(</span>
+<span>            map(str, self.get_cups(self.make_circle(labels), moves).labels())</span>
+<span>        )[1:]</span>
+<span></span>
 <span>    def play_a_lot(self, input):</span>
 <span>        labels = list(map(int, input))</span>
 <span></span>
@@ -146,10 +151,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

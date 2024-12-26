@@ -38,9 +38,11 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Group:</span>
 <span>    def __init__(self, group):</span>
@@ -57,6 +59,7 @@
 <span>    def get_all_yes_answers(self):</span>
 <span>        return sum([answer == self.num_of_people for answer in self.answers])</span>
 <span></span>
+<span></span>
 <span>class Solution(InputAsStringSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 6</span>
@@ -70,7 +73,7 @@
 <span>        groups = [Group(group) for group in lines.split("\n\n")]</span>
 <span></span>
 <span>        return sum([group.get_all_yes_answers() for group in groups])</span>
-<span>    </span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -89,10 +92,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

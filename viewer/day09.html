@@ -38,9 +38,11 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -51,7 +53,7 @@
 <span>            for j in range(i + 1, index):</span>
 <span>                if input[i] + input[j] == input[index]:</span>
 <span>                    return True</span>
-<span>                </span>
+<span></span>
 <span>        return False</span>
 <span></span>
 <span>    def find_weak_number(self, lines, window=25):</span>
@@ -60,7 +62,7 @@
 <span>        for index in range(window, len(input)):</span>
 <span>            if not self.is_sum_of_previous(input, window, index):</span>
 <span>                return input[index]</span>
-<span>        </span>
+<span></span>
 <span>    def find_encryption_weakness(self, lines, window=25):</span>
 <span>        input = [int(n.strip()) for n in lines]</span>
 <span></span>
@@ -68,22 +70,22 @@
 <span></span>
 <span>        for size in range(2, len(input)):</span>
 <span>            terms = self.find_contiguous_set(input, weak_number, size)</span>
-<span>            </span>
+<span></span>
 <span>            if len(terms):</span>
 <span>                return min(terms) + max(terms)</span>
 <span></span>
 <span>    def find_contiguous_set(self, input, number, size):</span>
 <span>        for i in range(0, len(input) - size + 1):</span>
 <span>            terms = []</span>
-<span>            </span>
+<span></span>
 <span>            for j in range(i, i + size):</span>
 <span>                terms.append(input[j])</span>
 <span></span>
 <span>            if sum(terms) == number:</span>
 <span>                return terms</span>
-<span>        </span>
+<span></span>
 <span>        return []</span>
-<span>                </span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -102,10 +104,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

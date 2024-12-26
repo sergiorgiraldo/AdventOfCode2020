@@ -38,11 +38,13 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from functools import lru_cache</span>
 <span>from collections import defaultdict</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -50,35 +52,37 @@
 <span></span>
 <span>    def parse(self, lines):</span>
 <span>        input_ = tuple(map(int, lines))</span>
-<span>        self.input = sorted((0,) + input_ + (max(input_) + 3,)) #must use an instance variable because of lru_cache,</span>
-<span>                                                              #tuples are not hashable and can't be passed</span>
-<span>                                                              #as parameter      </span>
+<span>        self.input = sorted(</span>
+<span>            (0,) + input_ + (max(input_) + 3,)</span>
+<span>        )  # must use an instance variable because of lru_cache,</span>
+<span>        # tuples are not hashable and can't be passed</span>
+<span>        # as parameter</span>
 <span></span>
 <span>    def find_jolt_differences(self, lines):</span>
 <span>        self.parse(lines)</span>
 <span></span>
 <span>        differences = defaultdict(int)</span>
-<span>        </span>
+<span></span>
 <span>        for adapter, other_adapter in zip(self.input, self.input[1:]):</span>
 <span>            differences[abs(other_adapter - adapter)] += 1</span>
 <span></span>
-<span>        return differences[1] * differences[3]        </span>
+<span>        return differences[1] * differences[3]</span>
 <span></span>
-<span>    #for each adapter, i check if there is the next adapter that is 1, 2, or 3 jolts away and then recurse</span>
-<span>    #e.g adapters [10,11,14,15,17,20]</span>
+<span>    # for each adapter, i check if there is the next adapter that is 1, 2, or 3 jolts away and then recurse</span>
+<span>    # e.g adapters [10,11,14,15,17,20]</span>
 <span>    ##begin 10 -> 11 -> 14 ...</span>
-<span>    #when I am at adapter 14, i check for adapters 15, 16, 17, so 2 branches</span>
-<span>    #start  10 -> 11 -> 14 -> 15 -> 17 -> 20</span>
-<span>    #also   10 -> 11 -> 14 -> 17 -> 20</span>
-<span>    #when I reach the end (20) I count 1</span>
-<span>    #also memoize, there are trillions of combinations</span>
-<span>    @lru_cache </span>
+<span>    # when I am at adapter 14, i check for adapters 15, 16, 17, so 2 branches</span>
+<span>    # start  10 -> 11 -> 14 -> 15 -> 17 -> 20</span>
+<span>    # also   10 -> 11 -> 14 -> 17 -> 20</span>
+<span>    # when I reach the end (20) I count 1</span>
+<span>    # also memoize, there are trillions of combinations</span>
+<span>    @lru_cache</span>
 <span>    def count_arrangements(self, adapter):</span>
-<span>        if adapter == self.input[-1]: </span>
+<span>        if adapter == self.input[-1]:</span>
 <span>            return 1</span>
-<span>        </span>
+<span></span>
 <span>        count = 0</span>
-<span>        </span>
+<span></span>
 <span>        for i in 1, 2, 3:</span>
 <span>            if adapter + i in self.input:</span>
 <span>                count += self.count_arrangements(adapter + i)</span>
@@ -87,7 +91,7 @@
 <span></span>
 <span>    def arrange_adapters(self, lines):</span>
 <span>        self.parse(lines)</span>
-<span>        </span>
+<span></span>
 <span>        return self.count_arrangements(self.input[0])</span>
 <span></span>
 <span>    def part_1(self):</span>
@@ -108,10 +112,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

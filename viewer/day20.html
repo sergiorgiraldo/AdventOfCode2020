@@ -38,11 +38,13 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from enum import Enum</span>
 <span>from collections import defaultdict</span>
+<span></span>
 <span></span>
 <span>class Border(Enum):</span>
 <span>    TOP = 0</span>
@@ -50,19 +52,21 @@
 <span>    BOTTOM = 2</span>
 <span>    RIGHT = 3</span>
 <span></span>
+<span></span>
 <span>class Movement:</span>
 <span>    def rotate(image):</span>
 <span>        new_image = []</span>
 <span>        n = len(image)</span>
 <span>        for i in range(n):</span>
-<span>            new_row = ''</span>
+<span>            new_row = ""</span>
 <span>            for j in range(n):</span>
-<span>                new_row += image[j][n-1-i]</span>
+<span>                new_row += image[j][n - 1 - i]</span>
 <span>            new_image.append(new_row)</span>
 <span>        return new_image</span>
 <span></span>
 <span>    def flip(image):</span>
 <span>        return [row[::-1] for row in image]</span>
+<span></span>
 <span></span>
 <span>class Tile:</span>
 <span>    def __init__(self, tile_info):</span>
@@ -85,13 +89,13 @@
 <span>        self.borders.add(left_border)</span>
 <span>        self.borders.add(left_border[::-1])</span>
 <span></span>
-<span>    def is_neighbor(self, other) :</span>
+<span>    def is_neighbor(self, other):</span>
 <span>        if other.tile_id == self.tile_id:</span>
 <span>            # Same tile</span>
 <span>            return False</span>
 <span>        return len(self.borders.intersection(other.borders)) > 0</span>
 <span></span>
-<span>    def get_border(self, border) :</span>
+<span>    def get_border(self, border):</span>
 <span>        if border == Border.TOP:</span>
 <span>            return self.tile[0]</span>
 <span>        if border == Border.BOTTOM:</span>
@@ -102,7 +106,7 @@
 <span>            index = -1</span>
 <span>        return "".join([row[index] for row in self.tile])</span>
 <span></span>
-<span>    def match_border(self, other, border) :</span>
+<span>    def match_border(self, other, border):</span>
 <span>        border = self.get_border(border)</span>
 <span>        return len(other.borders.intersection(set([border]))) > 0</span>
 <span></span>
@@ -112,7 +116,7 @@
 <span>    def flip(self):</span>
 <span>        self.tile = Movement.flip(self.tile)</span>
 <span></span>
-<span>    def _adapt_rotate(self, edge, border) :</span>
+<span>    def _adapt_rotate(self, edge, border):</span>
 <span>        for _ in range(4):</span>
 <span>            if edge == self.get_border(border):</span>
 <span>                return True</span>
@@ -125,45 +129,73 @@
 <span>        self.flip()</span>
 <span>        self._adapt_rotate(edge, border)</span>
 <span></span>
-<span>    def tile_without_borders(self) :</span>
+<span>    def tile_without_borders(self):</span>
 <span>        return [row[1:-1] for row in self.tile[1:-1]]</span>
 <span></span>
-<span>    def _is_top_left(self, right_neighbor, bottom_neighbor) :</span>
-<span>        return self.match_border(right_neighbor, Border.RIGHT) and self.match_border(bottom_neighbor, Border.BOTTOM)</span>
+<span>    def _is_top_left(self, right_neighbor, bottom_neighbor):</span>
+<span>        return self.match_border(right_neighbor, Border.RIGHT) and self.match_border(</span>
+<span>            bottom_neighbor, Border.BOTTOM</span>
+<span>        )</span>
 <span></span>
-<span>    def is_top_left(self, neighbor_0, neighbor_1) :</span>
+<span>    def is_top_left(self, neighbor_0, neighbor_1):</span>
 <span>        for _ in range(4):</span>
-<span>            if self._is_top_left(neighbor_0, neighbor_1) or self._is_top_left(neighbor_1, neighbor_0):</span>
+<span>            if self._is_top_left(neighbor_0, neighbor_1) or self._is_top_left(</span>
+<span>                neighbor_1, neighbor_0</span>
+<span>            ):</span>
 <span>                return True</span>
 <span>            self.rotate()</span>
 <span>        self.flip()</span>
 <span>        for _ in range(4):</span>
-<span>            if self._is_top_left(neighbor_0, neighbor_1) or self._is_top_left(neighbor_1, neighbor_0):</span>
+<span>            if self._is_top_left(neighbor_0, neighbor_1) or self._is_top_left(</span>
+<span>                neighbor_1, neighbor_0</span>
+<span>            ):</span>
 <span>                return True</span>
 <span>            self.rotate()</span>
 <span>        return False</span>
 <span></span>
-<span>class Monster:</span>
-<span># from the puzzle, this is the image from a monster</span>
-<span>#              11111111112</span>
-<span>#    012345678901234567890</span>
-<span>#-1                    # </span>
-<span># 0  #    ##    ##    ###</span>
-<span># 1   #  #  #  #  #  #   </span>
 <span></span>
-<span>    monster_relative_position = [(0, 0), (1, 1), (1, 4), (0, 5), (0, 6),</span>
-<span>                                (1, 7), (1, 10), (0, 11), (0, 12), (1, 13),</span>
-<span>                                (1, 16), (0, 17), (-1, 18), (0, 18), (0, 19)]</span>
+<span>class Monster:</span>
+<span>    # from the puzzle, this is the image from a monster</span>
+<span>    #              11111111112</span>
+<span>    #    012345678901234567890</span>
+<span>    # -1                    #</span>
+<span>    # 0  #    ##    ##    ###</span>
+<span>    # 1   #  #  #  #  #  #</span>
+<span></span>
+<span>    monster_relative_position = [</span>
+<span>        (0, 0),</span>
+<span>        (1, 1),</span>
+<span>        (1, 4),</span>
+<span>        (0, 5),</span>
+<span>        (0, 6),</span>
+<span>        (1, 7),</span>
+<span>        (1, 10),</span>
+<span>        (0, 11),</span>
+<span>        (0, 12),</span>
+<span>        (1, 13),</span>
+<span>        (1, 16),</span>
+<span>        (0, 17),</span>
+<span>        (-1, 18),</span>
+<span>        (0, 18),</span>
+<span>        (0, 19),</span>
+<span>    ]</span>
 <span></span>
 <span>    def is_monster_body(image, row, col):</span>
-<span>        return 0 <= row < len(image) and 0 <= col < len(image[row]) and image[row][col] == '#'</span>
+<span>        return (</span>
+<span>            0 <= row < len(image)</span>
+<span>            and 0 <= col < len(image[row])</span>
+<span>            and image[row][col] == "#"</span>
+<span>        )</span>
 <span></span>
 <span>    def is_monster_here(image, row, col):</span>
-<span>        return all(map(lambda offset: </span>
-<span>                       Monster.is_monster_body(image, </span>
-<span>                                               row+offset[0], </span>
-<span>                                               col+offset[1]), </span>
-<span>                       Monster.monster_relative_position))</span>
+<span>        return all(</span>
+<span>            map(</span>
+<span>                lambda offset: Monster.is_monster_body(</span>
+<span>                    image, row + offset[0], col + offset[1]</span>
+<span>                ),</span>
+<span>                Monster.monster_relative_position,</span>
+<span>            )</span>
+<span>        )</span>
 <span></span>
 <span>    def count_monsters(image):</span>
 <span>        monsters = 0</span>
@@ -190,8 +222,9 @@
 <span>            image = Movement.rotate(image)</span>
 <span>        return total_hash</span>
 <span></span>
-<span>    def get_roughness(image) :</span>
+<span>    def get_roughness(image):</span>
 <span>        return Monster.count_safe_position(image)</span>
+<span></span>
 <span></span>
 <span>class Arrangement:</span>
 <span>    def __init__(self, tiles):</span>
@@ -204,18 +237,18 @@
 <span>                if tile.is_neighbor(other):</span>
 <span>                    self.neighbors[tile.tile_id].append(other.tile_id)</span>
 <span></span>
-<span>    def _is_top_left_tile(self, tile_id) :</span>
+<span>    def _is_top_left_tile(self, tile_id):</span>
 <span>        tile = self.tiles[tile_id]</span>
 <span>        neighbor_0 = self.tiles[self.neighbors[tile_id][0]]</span>
 <span>        neighbor_1 = self.tiles[self.neighbors[tile_id][1]]</span>
 <span>        return tile.is_top_left(neighbor_0, neighbor_1)</span>
 <span></span>
-<span>    def _find_top_left_tile(self) :</span>
+<span>    def _find_top_left_tile(self):</span>
 <span>        for tile_id in self.corners:</span>
 <span>            if self._is_top_left_tile(tile_id):</span>
 <span>                return tile_id</span>
 <span></span>
-<span>        raise Exception('Should not reach this point')</span>
+<span>        raise Exception("Should not reach this point")</span>
 <span></span>
 <span>    def _find_next_tile(self, current_id, match_border, adapt_border):</span>
 <span>        current_tile = self.tiles[current_id]</span>
@@ -223,23 +256,20 @@
 <span>        for neighbor_id in neighbors:</span>
 <span>            neighbor = self.tiles[neighbor_id]</span>
 <span>            if current_tile.match_border(neighbor, match_border):</span>
-<span>                neighbor.adapt(</span>
-<span>                    current_tile.get_border(match_border), adapt_border)</span>
+<span>                neighbor.adapt(current_tile.get_border(match_border), adapt_border)</span>
 <span>                return neighbor_id</span>
 <span>        return None</span>
 <span></span>
-<span>    def _construct_row(self, first_tile_in_row) :</span>
+<span>    def _construct_row(self, first_tile_in_row):</span>
 <span>        current_id = first_tile_in_row</span>
 <span>        row = []</span>
 <span>        while current_id:</span>
 <span>            current_tile = self.tiles[current_id]</span>
 <span>            row.append(current_tile)</span>
-<span>            current_id = self._find_next_tile(</span>
-<span>                current_id, Border.RIGHT, Border.LEFT)</span>
+<span>            current_id = self._find_next_tile(current_id, Border.RIGHT, Border.LEFT)</span>
 <span></span>
 <span>        self.image_tiles.append(row)</span>
-<span>        return self._find_next_tile(</span>
-<span>            row[0].tile_id, Border.BOTTOM, Border.TOP)</span>
+<span>        return self._find_next_tile(row[0].tile_id, Border.BOTTOM, Border.TOP)</span>
 <span></span>
 <span>    def _construct_image_tiles(self):</span>
 <span>        self.image_tiles = []</span>
@@ -247,31 +277,30 @@
 <span>        while first_tile_id:</span>
 <span>            first_tile_id = self._construct_row(first_tile_id)</span>
 <span></span>
-<span></span>
 <span>    def line_adjacent_borders(self):</span>
 <span>        self.corners = []</span>
 <span>        result = 1</span>
-<span>        for tile_id, neighbors in self.neighbors. items():</span>
+<span>        for tile_id, neighbors in self.neighbors.items():</span>
 <span>            if len(neighbors) == 2:</span>
 <span>                result *= tile_id</span>
 <span>                self.corners.append(tile_id)</span>
 <span></span>
 <span>        return result</span>
-<span>    </span>
+<span></span>
 <span>    def construct_image(self):</span>
 <span>        self._construct_image_tiles()</span>
 <span>        image_without_borders = []</span>
 <span>        for tiles in self.image_tiles:</span>
-<span>            tiles_without_borders = [</span>
-<span>                tile.tile_without_borders() for tile in tiles]</span>
+<span>            tiles_without_borders = [tile.tile_without_borders() for tile in tiles]</span>
 <span>            tiles_without_borders_concatenated = []</span>
 <span>            for i in range(len(tiles_without_borders[0])):</span>
-<span>                row = ''</span>
+<span>                row = ""</span>
 <span>                for j in range(len(tiles_without_borders)):</span>
 <span>                    row += tiles_without_borders[j][i]</span>
 <span>                tiles_without_borders_concatenated.append(row)</span>
 <span>            image_without_borders.extend(tiles_without_borders_concatenated)</span>
 <span>        self.image_without_borders = image_without_borders</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsStringSolution):</span>
 <span>    _year = 2020</span>
@@ -281,16 +310,16 @@
 <span>        tiles = lines.split("\n\n")</span>
 <span></span>
 <span>        arrangement = Arrangement(tiles)</span>
-<span>        </span>
+<span></span>
 <span>        return arrangement.line_adjacent_borders()</span>
 <span></span>
 <span>    def check_monsters(self, lines):</span>
 <span>        tiles = lines.split("\n\n")</span>
-<span>        </span>
+<span></span>
 <span>        arrangement = Arrangement(tiles)</span>
 <span>        arrangement.line_adjacent_borders()</span>
 <span>        arrangement.construct_image()</span>
-<span>        </span>
+<span></span>
 <span>        return Monster.get_roughness(arrangement.image_without_borders)</span>
 <span></span>
 <span>    def part_1(self):</span>
@@ -311,10 +340,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

@@ -2,11 +2,13 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 from collections import defaultdict
 import re
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -18,11 +20,15 @@ class Solution(InputAsLinesSolution):
         if position in self.neighbourhood:
             return self.neighbourhood[position]
 
-        positions = [   
-                    (position[0] + 1, position[1] + 1), (position[0] - 1, position[1] + 1), 
-                    (position[0] - 2, position[1]), (position[0] + 2, position[1]),
-                    (position[0] - 1, position[1] - 1), (position[0] + 1, position[1] - 1)]
-        
+        positions = [
+            (position[0] + 1, position[1] + 1),
+            (position[0] - 1, position[1] + 1),
+            (position[0] - 2, position[1]),
+            (position[0] + 2, position[1]),
+            (position[0] - 1, position[1] - 1),
+            (position[0] + 1, position[1] - 1),
+        ]
+
         self.neighbourhood[position] = positions
 
         return positions
@@ -65,11 +71,16 @@ class Solution(InputAsLinesSolution):
 
             for k, v in tiles_to_consider.items():
                 neighbours = self.neighbours_of(k)
-                
-                colors = [tiles[neighbour] if neighbour in tiles else False for neighbour in neighbours]
+
+                colors = [
+                    tiles[neighbour] if neighbour in tiles else False
+                    for neighbour in neighbours
+                ]
 
                 if v:
-                    new_tiles[k] = not (colors.count(True) == 0 or colors.count(True) > 2)
+                    new_tiles[k] = not (
+                        colors.count(True) == 0 or colors.count(True) > 2
+                    )
                 else:
                     new_tiles[k] = colors.count(True) == 2
 
@@ -95,9 +106,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
+
 if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

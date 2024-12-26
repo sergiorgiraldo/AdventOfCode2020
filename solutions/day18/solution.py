@@ -2,9 +2,11 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -38,8 +40,10 @@ class Solution(InputAsLinesSolution):
                     # Calculate the expression inside parentheses first
                     # then create calculate a new expression with the stuff
                     # inside parentheses replaced by its result
-                    value = self.evaluate(expr[open_start+1:i], advanced)
-                    return self.evaluate(expr[:open_start] + str(value) + expr[i+1:], advanced)
+                    value = self.evaluate(expr[open_start + 1 : i], advanced)
+                    return self.evaluate(
+                        expr[:open_start] + str(value) + expr[i + 1 :], advanced
+                    )
 
     def calculate_without_parentheses(self, expr, advanced):
         curr_num = ""
@@ -69,7 +73,7 @@ class Solution(InputAsLinesSolution):
 
         return num_stack[0]
 
-    def evaluate(self, expr, advanced = False):
+    def evaluate(self, expr, advanced=False):
         expr = expr.replace(" ", "")
 
         if "(" in expr:
@@ -95,9 +99,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
+
 if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

@@ -38,41 +38,45 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAs2DSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 3</span>
 <span></span>
 <span>    def find_trees_single(self, map, right, down):</span>
-<span>        trees,i,j = 0,0,0</span>
-<span>        </span>
+<span>        trees, i, j = 0, 0, 0</span>
+<span></span>
 <span>        width = len(map[0])</span>
 <span></span>
 <span>        while True:</span>
 <span>            i += down</span>
 <span>            j += right</span>
-<span>            </span>
-<span>            if i >= len(map): break</span>
+<span></span>
+<span>            if i >= len(map):</span>
+<span>                break</span>
 <span></span>
 <span>            if map[i][j % width] == "#":</span>
 <span>                trees += 1</span>
-<span>        </span>
+<span></span>
 <span>        return trees</span>
 <span></span>
 <span>    def find_trees_multiple(self, map):</span>
-<span>        return \</span>
-<span>            self.find_trees_single(map, 1, 1) * \</span>
-<span>            self.find_trees_single(map, 3, 1) * \</span>
-<span>            self.find_trees_single(map, 5, 1) * \</span>
-<span>            self.find_trees_single(map, 7, 1) * \</span>
-<span>            self.find_trees_single(map, 1, 2)</span>
+<span>        return (</span>
+<span>            self.find_trees_single(map, 1, 1)</span>
+<span>            * self.find_trees_single(map, 3, 1)</span>
+<span>            * self.find_trees_single(map, 5, 1)</span>
+<span>            * self.find_trees_single(map, 7, 1)</span>
+<span>            * self.find_trees_single(map, 1, 2)</span>
+<span>        )</span>
 <span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
-<span>        </span>
+<span></span>
 <span>        res = self.find_trees_single(self.input, 3, 1)</span>
 <span></span>
 <span>        end_time = time.time()</span>
@@ -89,7 +93,7 @@
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>

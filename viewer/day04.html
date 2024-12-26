@@ -38,10 +38,12 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>import re</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsStringSolution):</span>
 <span>    _year = 2020</span>
@@ -72,8 +74,9 @@
 <span>        match = re.match(r"^([0-9]+)(cm|in)$", field)</span>
 <span>        if match:</span>
 <span>            groups = match.groups()</span>
-<span>            return (groups[1] == "cm" and 150 <= int(groups[0]) <= 193) or \</span>
-<span>                   (groups[1] == "in" and 59 <= int(groups[0]) <= 76)</span>
+<span>            return (groups[1] == "cm" and 150 <= int(groups[0]) <= 193) or (</span>
+<span>                groups[1] == "in" and 59 <= int(groups[0]) <= 76</span>
+<span>            )</span>
 <span></span>
 <span>    def check_hcl(self, field):</span>
 <span>        return re.match(r"^#[0-9a-f]{6}$", field)</span>
@@ -85,38 +88,43 @@
 <span>        return field in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]</span>
 <span></span>
 <span>    def has_required_fields(self, passport):</span>
-<span>        return all(key in passport for key in ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"))</span>
+<span>        return all(</span>
+<span>            key in passport for key in ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")</span>
+<span>        )</span>
 <span></span>
 <span>    def check_passports_loose(self, lines):</span>
 <span>        valids = 0</span>
-<span>        </span>
+<span></span>
 <span>        passports = self.parse(lines)</span>
 <span></span>
 <span>        for passport in passports:</span>
 <span>            if self.has_required_fields(passport):</span>
 <span>                valids += 1</span>
 <span></span>
-<span>        return valids        </span>
-<span>    </span>
+<span>        return valids</span>
+<span></span>
 <span>    def check_passports_strict(self, lines):</span>
 <span>        valids = 0</span>
-<span>        </span>
+<span></span>
 <span>        passports = self.parse(lines)</span>
 <span></span>
 <span>        for passport in passports:</span>
 <span>            if self.has_required_fields(passport):</span>
-<span>                if all((</span>
+<span>                if all(</span>
+<span>                    (</span>
 <span>                        self.check_byr(passport["byr"]),</span>
 <span>                        self.check_iyr(passport["iyr"]),</span>
 <span>                        self.check_eyr(passport["eyr"]),</span>
 <span>                        self.check_hgt(passport["hgt"]),</span>
 <span>                        self.check_hcl(passport["hcl"]),</span>
 <span>                        self.check_ecl(passport["ecl"]),</span>
-<span>                        self.check_pid(passport["pid"]))):</span>
+<span>                        self.check_pid(passport["pid"]),</span>
+<span>                    )</span>
+<span>                ):</span>
 <span>                    valids += 1</span>
 <span></span>
-<span>        return valids   </span>
-<span>    </span>
+<span>        return valids</span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -135,10 +143,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

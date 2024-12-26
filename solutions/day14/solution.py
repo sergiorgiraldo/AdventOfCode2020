@@ -2,13 +2,15 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 from abc import ABC, abstractmethod
 from typing import final
 
 SIZE = 36
+
 
 class DockingProgram(ABC):
     def __init__(self, instructions):
@@ -28,7 +30,7 @@ class DockingProgram(ABC):
     def mask(self, value):
         if self.mask_string is None:
             return value
-        
+
         masked_value = ""
         value = bin(value)[2:]
 
@@ -58,6 +60,7 @@ class DockingProgram(ABC):
     def memory_status(self):
         return sum(self.memory.values())
 
+
 class DockingProgram_V1(DockingProgram):
     def mask_bit(self, mask, bit):
         return bit if mask == "X" else mask
@@ -65,6 +68,7 @@ class DockingProgram_V1(DockingProgram):
     def write(self, mem_addr, value):
         masked_value = self.mask(value)
         self.memory[mem_addr] = int(masked_value, 2)
+
 
 class DockingProgram_V2(DockingProgram):
     def mask_bit(self, mask, bit):
@@ -77,12 +81,13 @@ class DockingProgram_V2(DockingProgram):
                 self.memory[addr] = value
             else:
                 index = masked_addr.find("X")
-                helper(masked_addr[:index] + "1" + masked_addr[index+1:])
-                helper(masked_addr[:index] + "0" + masked_addr[index+1:])
+                helper(masked_addr[:index] + "1" + masked_addr[index + 1 :])
+                helper(masked_addr[:index] + "0" + masked_addr[index + 1 :])
 
         masked_addr = self.mask(mem_addr)
 
         helper(masked_addr)
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -90,14 +95,14 @@ class Solution(InputAsLinesSolution):
 
     def get_memory_v1(self, instructions):
         program = DockingProgram_V1(instructions)
-        
+
         program.run()
 
         return program.memory_status
 
     def get_memory_v2(self, instructions):
         program = DockingProgram_V2(instructions)
-        
+
         program.run()
 
         return program.memory_status
@@ -120,9 +125,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
+
 if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

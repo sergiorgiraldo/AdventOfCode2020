@@ -2,9 +2,11 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class Solution(InputAsStringSolution):
     _year = 2020
@@ -14,12 +16,12 @@ class Solution(InputAsStringSolution):
     def get_nth_number(self, input, turns):
         numbers = [int(x) for x in input.split(",")]
 
-        mem = {nr: x+1 for x, nr in enumerate(numbers[:-1])}
+        mem = {nr: x + 1 for x, nr in enumerate(numbers[:-1])}
         last = numbers[-1]
 
         for count in range(len(numbers), turns):
             mem[last], last = count, count - mem[last] if last in mem else 0
-        
+
         return last
 
     def part_1(self):
@@ -40,9 +42,10 @@ class Solution(InputAsStringSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

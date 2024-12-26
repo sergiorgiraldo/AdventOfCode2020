@@ -38,29 +38,31 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from itertools import count</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 25</span>
 <span></span>
 <span>    def get_encryption_key(self, keys):</span>
-<span>        card_key, door_key = *map(int, keys),</span>
+<span>        card_key, door_key = (*map(int, keys),)</span>
 <span></span>
 <span>        public_key = [1, 1]</span>
 <span>        encryption_key = 1</span>
 <span>        cycles = 0</span>
 <span></span>
-<span>        #algorithm is symmetric so I can perform the operations in both keys</span>
-<span>        #at the same time, whichever matches first is my answer.</span>
-<span>        #with this approach, I can cycle just once.</span>
+<span>        # algorithm is symmetric so I can perform the operations in both keys</span>
+<span>        # at the same time, whichever matches first is my answer.</span>
+<span>        # with this approach, I can cycle just once.</span>
 <span>        while True:</span>
 <span>            cycles += 1</span>
-<span>            </span>
-<span>            public_key[0] = (public_key[0] * 7) % 20201227 #magic numbers from puzzle</span>
+<span></span>
+<span>            public_key[0] = (public_key[0] * 7) % 20201227  # magic numbers from puzzle</span>
 <span>            public_key[1] = (public_key[1] * 7) % 20201227</span>
 <span></span>
 <span>            if public_key[0] == card_key:</span>
@@ -68,15 +70,14 @@
 <span>                    encryption_key = (encryption_key * door_key) % 20201227</span>
 <span></span>
 <span>                return encryption_key</span>
-<span>            </span>
-<span>            elif public_key[1] == door_key: </span>
+<span></span>
+<span>            elif public_key[1] == door_key:</span>
 <span>                for _ in range(cycles):</span>
 <span>                    encryption_key = (encryption_key * card_key) % 20201227</span>
-<span>                </span>
+<span></span>
 <span>                return encryption_key</span>
 <span></span>
-<span>            #not big primes, took 4_412_860 cycles to crack, less than a sec :)</span>
-<span></span>
+<span>            # not big primes, took 4_412_860 cycles to crack, less than a sec :)</span>
 <span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
@@ -96,10 +97,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

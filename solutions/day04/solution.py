@@ -2,10 +2,12 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 import re
+
 
 class Solution(InputAsStringSolution):
     _year = 2020
@@ -36,8 +38,9 @@ class Solution(InputAsStringSolution):
         match = re.match(r"^([0-9]+)(cm|in)$", field)
         if match:
             groups = match.groups()
-            return (groups[1] == "cm" and 150 <= int(groups[0]) <= 193) or \
-                   (groups[1] == "in" and 59 <= int(groups[0]) <= 76)
+            return (groups[1] == "cm" and 150 <= int(groups[0]) <= 193) or (
+                groups[1] == "in" and 59 <= int(groups[0]) <= 76
+            )
 
     def check_hcl(self, field):
         return re.match(r"^#[0-9a-f]{6}$", field)
@@ -49,38 +52,43 @@ class Solution(InputAsStringSolution):
         return field in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
 
     def has_required_fields(self, passport):
-        return all(key in passport for key in ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"))
+        return all(
+            key in passport for key in ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
+        )
 
     def check_passports_loose(self, lines):
         valids = 0
-        
+
         passports = self.parse(lines)
 
         for passport in passports:
             if self.has_required_fields(passport):
                 valids += 1
 
-        return valids        
-    
+        return valids
+
     def check_passports_strict(self, lines):
         valids = 0
-        
+
         passports = self.parse(lines)
 
         for passport in passports:
             if self.has_required_fields(passport):
-                if all((
+                if all(
+                    (
                         self.check_byr(passport["byr"]),
                         self.check_iyr(passport["iyr"]),
                         self.check_eyr(passport["eyr"]),
                         self.check_hgt(passport["hgt"]),
                         self.check_hcl(passport["hcl"]),
                         self.check_ecl(passport["ecl"]),
-                        self.check_pid(passport["pid"]))):
+                        self.check_pid(passport["pid"]),
+                    )
+                ):
                     valids += 1
 
-        return valids   
-    
+        return valids
+
     def part_1(self):
         start_time = time.time()
 
@@ -99,9 +107,10 @@ class Solution(InputAsStringSolution):
 
         self.solve("2", res, (end_time - start_time))
 
+
 if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

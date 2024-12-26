@@ -38,15 +38,17 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 8</span>
 <span></span>
-<span>    #simple computer, i dont bother write an interpreter</span>
+<span>    # simple computer, i dont bother write an interpreter</span>
 <span>    def run(self, program):</span>
 <span>        acc, ip, offset = 0, 0, 1</span>
 <span></span>
@@ -61,19 +63,19 @@
 <span></span>
 <span>            instruction = program[ip]</span>
 <span>            offset = 1</span>
-<span>            </span>
-<span>            #nop instruction just increase the instruction pointer by 1</span>
+<span></span>
+<span>            # nop instruction just increase the instruction pointer by 1</span>
 <span>            if instruction.startswith("acc"):</span>
 <span>                increment = int(instruction.split("acc")[1])</span>
 <span>                acc += increment</span>
 <span>            elif instruction.startswith("jmp"):</span>
 <span>                offset = int(instruction.split("jmp")[1])</span>
 <span></span>
-<span>            ip += offset    </span>
+<span>            ip += offset</span>
 <span></span>
 <span>    def get_accumulator_before_loop(self, program):</span>
 <span>        return self.run(program)[1]</span>
-<span>    </span>
+<span></span>
 <span>    def get_accumulator_after_fix(self, program):</span>
 <span>        for instruction in range(len(program)):</span>
 <span>            new_program = program.copy()</span>
@@ -84,10 +86,10 @@
 <span>                new_program[instruction] = program[instruction].replace("jmp", "nop")</span>
 <span></span>
 <span>            result = self.run(new_program)</span>
-<span>            </span>
+<span></span>
 <span>            if result[0] == "fixed":</span>
 <span>                return result[1]</span>
-<span>            </span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -106,10 +108,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

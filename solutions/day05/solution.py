@@ -2,9 +2,11 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -15,8 +17,8 @@ class Solution(InputAsLinesSolution):
         seat, mid_seat, max_seat = 0, 0, 8
 
         for char in boarding_pass:
-            mid_row = (row + max_row)//2
-            mid_seat = (seat + max_seat)//2
+            mid_row = (row + max_row) // 2
+            mid_seat = (seat + max_seat) // 2
 
             if char == "F":
                 max_row = mid_row
@@ -36,7 +38,7 @@ class Solution(InputAsLinesSolution):
             passes.append(self.get_seat_id(boarding_pass))
 
         return passes
-        
+
     def get_highest_seat_id(self, lines):
         passes = self.get_passes(lines)
 
@@ -55,7 +57,7 @@ class Solution(InputAsLinesSolution):
             last_seat = seat_id
 
         return my_seat_id
-            
+
     def part_1(self):
         start_time = time.time()
 
@@ -74,9 +76,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

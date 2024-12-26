@@ -38,24 +38,28 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class SeatMap:</span>
 <span>    # o o o</span>
 <span>    # o | o</span>
 <span>    # o o o</span>
-<span>    directions = [(-1, -1), (-1, 0), (-1, 1),</span>
-<span>                  (0, -1), (0, 1), </span>
-<span>                  (1, -1), (1, 0), (1, 1)]</span>
-<span>    </span>
+<span>    directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]</span>
+<span></span>
 <span>    def __init__(self, layout):</span>
 <span>        self.layout_original = [[ch for ch in row] for row in layout]</span>
 <span></span>
 <span>    def check_valid_position(self, row, col):</span>
-<span>        return row >= 0 and row < len(self.layout) and \</span>
-<span>               col >= 0 and col < len(self.layout[0])</span>
+<span>        return (</span>
+<span>            row >= 0</span>
+<span>            and row < len(self.layout)</span>
+<span>            and col >= 0</span>
+<span>            and col < len(self.layout[0])</span>
+<span>        )</span>
 <span></span>
 <span>    def check_occupied(self, row: int, col: int, direction, first_visible):</span>
 <span>        row += direction[0]</span>
@@ -66,7 +70,7 @@
 <span>                return True</span>
 <span>            if self.layout[row][col] == "." and first_visible:</span>
 <span>                return self.check_occupied(row, col, direction, first_visible)</span>
-<span>            </span>
+<span></span>
 <span>        return False</span>
 <span></span>
 <span>    def count_occupied_around(self, row, col, first_visible):</span>
@@ -78,9 +82,9 @@
 <span></span>
 <span>        return cnt</span>
 <span></span>
-<span>    def count_occupied_seats(self, first_visible = False, rule = 4):</span>
+<span>    def count_occupied_seats(self, first_visible=False, rule=4):</span>
 <span>        self.layout = [[ch for ch in row] for row in self.layout_original]</span>
-<span>        new_layout  = [[ch for ch in row] for row in self.layout]</span>
+<span>        new_layout = [[ch for ch in row] for row in self.layout]</span>
 <span></span>
 <span>        is_changing = True</span>
 <span></span>
@@ -106,6 +110,7 @@
 <span>            new_layout, self.layout = self.layout, new_layout</span>
 <span></span>
 <span>        return sum([sum([i == "#" for i in row]) for row in self.layout])</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -139,10 +144,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

@@ -38,9 +38,11 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -58,52 +60,52 @@
 <span>        #           North: -1j</span>
 <span>        #                |</span>
 <span>        #                |</span>
-<span>        #   West:-1  ----o----  East:1  </span>
+<span>        #   West:-1  ----o----  East:1</span>
 <span>        #                |</span>
 <span>        #                |</span>
 <span>        #           South: 1j</span>
 <span></span>
-<span>        location_1 = 0+0j</span>
-<span>        location_2 = 0+0j</span>
+<span>        location_1 = 0 + 0j</span>
+<span>        location_2 = 0 + 0j</span>
 <span>        direction = 1</span>
-<span>        </span>
-<span>        waypoint = 10 - 1j # 10 east, 1 north, magic number from puzzle</span>
+<span></span>
+<span>        waypoint = 10 - 1j  # 10 east, 1 north, magic number from puzzle</span>
 <span></span>
 <span>        for instruction in instructions:</span>
 <span>            if instruction[0] == "N":</span>
 <span>                location_1 -= instruction[1] * 1j</span>
-<span>                waypoint   -= instruction[1] * 1j</span>
+<span>                waypoint -= instruction[1] * 1j</span>
 <span></span>
 <span>            elif instruction[0] == "S":</span>
 <span>                location_1 += instruction[1] * 1j</span>
-<span>                waypoint   += instruction[1] * 1j</span>
-<span>            </span>
+<span>                waypoint += instruction[1] * 1j</span>
+<span></span>
 <span>            elif instruction[0] == "W":</span>
 <span>                location_1 -= instruction[1]</span>
-<span>                waypoint   -= instruction[1]</span>
-<span>            </span>
+<span>                waypoint -= instruction[1]</span>
+<span></span>
 <span>            elif instruction[0] == "E":</span>
 <span>                location_1 += instruction[1]</span>
-<span>                waypoint   += instruction[1]</span>
-<span>            </span>
+<span>                waypoint += instruction[1]</span>
+<span></span>
 <span>            elif instruction[0] == "L":</span>
 <span>                for _ in range(instruction[1] // 90):</span>
 <span>                    direction *= -1j</span>
-<span>                    waypoint  *= -1j</span>
-<span>            </span>
+<span>                    waypoint *= -1j</span>
+<span></span>
 <span>            elif instruction[0] == "R":</span>
 <span>                for _ in range(instruction[1] // 90):</span>
 <span>                    direction *= 1j</span>
-<span>                    waypoint  *= 1j</span>
-<span>                    </span>
+<span>                    waypoint *= 1j</span>
+<span></span>
 <span>            elif instruction[0] == "F":</span>
 <span>                location_1 += instruction[1] * direction</span>
 <span>                location_2 += instruction[1] * waypoint</span>
-<span>            </span>
+<span></span>
 <span>            else:</span>
 <span>                raise Exception(f"Unknown instruction: {instruction[0]}")</span>
 <span></span>
-<span>        # get manhattan distance, since it is from origin, just add coordinates    </span>
+<span>        # get manhattan distance, since it is from origin, just add coordinates</span>
 <span>        distance_1 = int(abs(location_1.real) + abs(location_1.imag))</span>
 <span>        distance_2 = int(abs(location_2.real) + abs(location_2.imag))</span>
 <span></span>
@@ -127,10 +129,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

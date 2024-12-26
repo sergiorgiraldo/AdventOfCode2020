@@ -2,9 +2,11 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
+
 
 class Group:
     def __init__(self, group):
@@ -21,6 +23,7 @@ class Group:
     def get_all_yes_answers(self):
         return sum([answer == self.num_of_people for answer in self.answers])
 
+
 class Solution(InputAsStringSolution):
     _year = 2020
     _day = 6
@@ -34,7 +37,7 @@ class Solution(InputAsStringSolution):
         groups = [Group(group) for group in lines.split("\n\n")]
 
         return sum([group.get_all_yes_answers() for group in groups])
-    
+
     def part_1(self):
         start_time = time.time()
 
@@ -53,9 +56,10 @@ class Solution(InputAsStringSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

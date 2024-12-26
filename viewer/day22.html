@@ -38,22 +38,24 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from collections import defaultdict, deque</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsBlockSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 22</span>
 <span></span>
 <span>    def score(self, deck):</span>
-<span>        return sum([(i+1) * card for i, card in enumerate(reversed(deck))])</span>
+<span>        return sum([(i + 1) * card for i, card in enumerate(reversed(deck))])</span>
 <span></span>
 <span>    def play_combat(self, players):</span>
 <span>        deck1 = [int(card) for card in players[0].splitlines()[1:]]</span>
 <span>        deck2 = [int(card) for card in players[1].splitlines()[1:]]</span>
-<span>        </span>
+<span></span>
 <span>        while len(deck1) and len(deck2):</span>
 <span>            card1 = deck1[0]</span>
 <span>            card2 = deck2[0]</span>
@@ -64,7 +66,7 @@
 <span>            else:</span>
 <span>                deck1 = deck1[1:]</span>
 <span>                deck2 = deck2[1:] + [card2, card1]</span>
-<span>        </span>
+<span></span>
 <span>        return self.score(deck1) if len(deck1) else self.score(deck2)</span>
 <span></span>
 <span>    def play_recursive(self, players):</span>
@@ -72,7 +74,7 @@
 <span>        deck2 = [int(card) for card in players[1].splitlines()[1:]]</span>
 <span></span>
 <span>        return self.score(self.play_recursive_(deck1, deck2)[1])</span>
-<span>    </span>
+<span></span>
 <span>    # do the optimization from `curious_sapi3n`. If player 1 is holding the</span>
 <span>    # highest card in the sub game decks, it is a win for player 1.</span>
 <span>    # cuts down thousands of calls.</span>
@@ -81,9 +83,9 @@
 <span>    def play_recursive_(self, deck1, deck2):</span>
 <span>        m = max(deck1)</span>
 <span></span>
-<span>        if m > max(deck2) and m > len(deck1) + len(deck2): # (*)</span>
+<span>        if m > max(deck2) and m > len(deck1) + len(deck2):  # (*)</span>
 <span>            return True, deck1</span>
-<span>        </span>
+<span></span>
 <span>        memory = set()</span>
 <span>        while len(deck1) and len(deck2):</span>
 <span>            s = (tuple(deck1), tuple(deck2))</span>
@@ -95,7 +97,9 @@
 <span>            card2 = deck2[0]</span>
 <span></span>
 <span>            if len(deck1) > card1 and len(deck2) > card2:</span>
-<span>                win, _ = self.play_recursive_(deck1[1:card1+1], deck2[1:card2+1])</span>
+<span>                win, _ = self.play_recursive_(</span>
+<span>                    deck1[1 : card1 + 1], deck2[1 : card2 + 1]</span>
+<span>                )</span>
 <span>            else:</span>
 <span>                win = card1 > card2</span>
 <span></span>
@@ -110,7 +114,7 @@
 <span>            return True, deck1</span>
 <span>        else:</span>
 <span>            return False, deck2</span>
-<span>        </span>
+<span></span>
 <span>    def part_1(self):</span>
 <span>        start_time = time.time()</span>
 <span></span>
@@ -129,10 +133,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
-<span>if __name__ == '__main__':</span>
+<span></span>
+<span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

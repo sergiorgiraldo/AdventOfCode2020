@@ -5,6 +5,7 @@ from solution import Rules
 
 solution = Solution()
 
+
 class Tests(unittest.TestCase):
     def test_part1(self):
         list = """0: 1 2
@@ -97,6 +98,7 @@ aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"""
 
     def test_sanity_check(self):
         self.assertEqual(1 + 1, 2, "Oops")
+
 
 if __name__ == "__main__":
     unittest.main()

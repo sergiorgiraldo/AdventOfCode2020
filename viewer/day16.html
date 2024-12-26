@@ -38,10 +38,12 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
 <span>from collections import defaultdict</span>
+<span></span>
 <span></span>
 <span>class FieldRule:</span>
 <span>    def __init__(self, rule: str):</span>
@@ -54,8 +56,11 @@
 <span>        return int(range[0]), int(range[1])</span>
 <span></span>
 <span>    def validate(self, value):</span>
-<span>        return self.first_range[0] <= value <= self.first_range[1] or\</span>
-<span>            self.second_range[0] <= value <= self.second_range[1]</span>
+<span>        return (</span>
+<span>            self.first_range[0] <= value <= self.first_range[1]</span>
+<span>            or self.second_range[0] <= value <= self.second_range[1]</span>
+<span>        )</span>
+<span></span>
 <span></span>
 <span>class TicketRule:</span>
 <span>    def __init__(self, rules: str):</span>
@@ -100,8 +105,7 @@
 <span>                    possile_idx[field].append(i)</span>
 <span></span>
 <span>        # Sort by len of possible choices to help find faster.</span>
-<span>        possible_idx_len = [(len(possile_idx[field]), field)</span>
-<span>                            for field in self.rules]</span>
+<span>        possible_idx_len = [(len(possile_idx[field]), field) for field in self.rules]</span>
 <span>        possible_idx_len.sort()</span>
 <span></span>
 <span>        used_indices = [False] * len(self.rules)</span>
@@ -121,6 +125,7 @@
 <span></span>
 <span>        helper(0)</span>
 <span></span>
+<span></span>
 <span>class Solution(InputAsStringSolution):</span>
 <span>    _year = 2020</span>
 <span>    _day = 16</span>
@@ -133,7 +138,9 @@
 <span>        my_ticket = [int(value) for value in my_ticket.split(",")]</span>
 <span></span>
 <span>        nearby_tickets = parts[2].splitlines()[1:]</span>
-<span>        nearby_tickets = [[int(value) for value in ticket.split(",")] for ticket in nearby_tickets]</span>
+<span>        nearby_tickets = [</span>
+<span>            [int(value) for value in ticket.split(",")] for ticket in nearby_tickets</span>
+<span>        ]</span>
 <span></span>
 <span>        return rule, my_ticket, nearby_tickets</span>
 <span></span>
@@ -147,18 +154,18 @@
 <span>    def determine_my_ticket(self, lines):</span>
 <span>        _, my_ticket, _ = self.parse(lines)</span>
 <span></span>
-<span>        rule = self.get_error_rate(lines)[0] #get rid of invalid tickets</span>
+<span>        rule = self.get_error_rate(lines)[0]  # get rid of invalid tickets</span>
 <span></span>
 <span>        rule.detect_index()</span>
 <span>        indices = []</span>
 <span>        for field in rule.rules:</span>
-<span>            if 'departure' in field:</span>
+<span>            if "departure" in field:</span>
 <span>                indices.append(rule.rule_index[field])</span>
 <span></span>
 <span>        result = 1</span>
 <span>        for idx in indices:</span>
 <span>            result *= my_ticket[idx]</span>
-<span>        </span>
+<span></span>
 <span>        return rule, result</span>
 <span></span>
 <span>    def part_1(self):</span>
@@ -179,10 +186,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>

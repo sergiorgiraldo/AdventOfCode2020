@@ -2,10 +2,12 @@
 
 import time
 import sys
-sys.path.insert(0,"..")
+
+sys.path.insert(0, "..")
 
 from base.advent import *
 from math import gcd
+
 
 class Solution(InputAsLinesSolution):
     _year = 2020
@@ -32,17 +34,17 @@ class Solution(InputAsLinesSolution):
 
             interval = int(bus)
             departures = int(time_to_leave / interval)
-            next_bus = (departures + 1) * interval #next bus after my time to leave
+            next_bus = (departures + 1) * interval  # next bus after my time to leave
             wait_time = next_bus - time_to_leave
             buses_in_service.append(interval)
             wait_times.append(wait_time)
 
         my_bus = wait_times.index(min(wait_times))
-        
+
         return buses_in_service[my_bus] * wait_times[my_bus]
 
     # we need to find a number such that the remainders of all the buses are consecutive after N departures
-    # suppose we have 3 buses: 3, 5, 7. After N departures, from perspective of the third bus, time elapsed is 7N 
+    # suppose we have 3 buses: 3, 5, 7. After N departures, from perspective of the third bus, time elapsed is 7N
     # from 2nd bus perspective, to win the gold coin, it left at 7N - 1, so the remainder of 7N divided by 5 is 1
     # from 1st bus perspective, to win the gold coin, it left at 7N - 2, so the remainder of 7N divided by 3 is 2
 
@@ -50,9 +52,9 @@ class Solution(InputAsLinesSolution):
     #                   bus 31 leaves at t=1068787 -> 34477 * 31 + 1 (1068788 / 31 gives remainder 1)
     #                   bus 59 leaves at t=1068786 -> 18115 * 59 + 2 (1068788 / 59 gives remainder 2)
 
-    # the **Chinese remainder theorem** states that if one knows the remainders of the Euclidean division of 
-    # an integer n by several integers, then one can determine uniquely the remainder of the division of n by 
-    # the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors 
+    # the **Chinese remainder theorem** states that if one knows the remainders of the Euclidean division of
+    # an integer n by several integers, then one can determine uniquely the remainder of the division of n by
+    # the product of these integers, under the condition that the divisors are pairwise coprime (no two divisors
     # share a common factor other than 1).
     # https://en.wikipedia.org/wiki/Chinese_remainder_theorem
 
@@ -60,13 +62,13 @@ class Solution(InputAsLinesSolution):
     # https://www.math.cmu.edu/~mradclif/teaching/127S19/Notes/ChineseRemainderTheorem.pdf
     # https://www.youtube.com/watch?v=ru7mWZJlRQg
 
-    def coprime(self,n):
-        coprimes = 0        
-        for i in range(1, n+1):
+    def coprime(self, n):
+        coprimes = 0
+        for i in range(1, n + 1):
             if gcd(n, i) == 1:
                 coprimes += 1
         return coprimes
-    
+
     def win_gold_coin(self, lines):
         _, buses = self.parse(lines)
 
@@ -83,10 +85,10 @@ class Solution(InputAsLinesSolution):
 
         for bus in buses_in_service:
             buses_product *= bus
-        
+
         sum = 0
 
-        for i in range(len(buses_in_service)): 
+        for i in range(len(buses_in_service)):
             bus = buses_in_service[i]
             remainder = (bus - offsets[i]) % bus
             b = int(buses_product / bus) ** (self.coprime(bus) - 1) % bus
@@ -112,9 +114,10 @@ class Solution(InputAsLinesSolution):
 
         self.solve("2", res, (end_time - start_time))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     solution = Solution()
 
     solution.part_1()
-    
+
     solution.part_2()

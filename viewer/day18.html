@@ -38,9 +38,11 @@
 <span></span>
 <span>import time</span>
 <span>import sys</span>
-<span>sys.path.insert(0,"..")</span>
+<span></span>
+<span>sys.path.insert(0, "..")</span>
 <span></span>
 <span>from base.advent import *</span>
+<span></span>
 <span></span>
 <span>class Solution(InputAsLinesSolution):</span>
 <span>    _year = 2020</span>
@@ -74,8 +76,10 @@
 <span>                    # Calculate the expression inside parentheses first</span>
 <span>                    # then create calculate a new expression with the stuff</span>
 <span>                    # inside parentheses replaced by its result</span>
-<span>                    value = self.evaluate(expr[open_start+1:i], advanced)</span>
-<span>                    return self.evaluate(expr[:open_start] + str(value) + expr[i+1:], advanced)</span>
+<span>                    value = self.evaluate(expr[open_start + 1 : i], advanced)</span>
+<span>                    return self.evaluate(</span>
+<span>                        expr[:open_start] + str(value) + expr[i + 1 :], advanced</span>
+<span>                    )</span>
 <span></span>
 <span>    def calculate_without_parentheses(self, expr, advanced):</span>
 <span>        curr_num = ""</span>
@@ -105,7 +109,7 @@
 <span></span>
 <span>        return num_stack[0]</span>
 <span></span>
-<span>    def evaluate(self, expr, advanced = False):</span>
+<span>    def evaluate(self, expr, advanced=False):</span>
 <span>        expr = expr.replace(" ", "")</span>
 <span></span>
 <span>        if "(" in expr:</span>
@@ -131,10 +135,12 @@
 <span></span>
 <span>        self.solve("2", res, (end_time - start_time))</span>
 <span></span>
+<span></span>
 <span>if __name__ == "__main__":</span>
 <span>    solution = Solution()</span>
 <span></span>
 <span>    solution.part_1()</span>
-<span>    </span>
+<span></span>
 <span>    solution.part_2()</span>
+<span></span>
 </pre>
