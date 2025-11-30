@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.0](https://github.com/sergiorgiraldo/AdventOfCode2020/compare/v6.1.0...v6.2.0) (2025-11-30)
+
+
+### Features
+
+* retrieve easter-eggs ([2cf1328](https://github.com/sergiorgiraldo/AdventOfCode2020/commit/2cf1328d5fa655ffc062def53ece1095902345e4))
+
 ## [6.1.0](https://github.com/sergiorgiraldo/AdventOfCode2020/compare/v6.0.0...v6.1.0) (2024-06-28)
 
 
